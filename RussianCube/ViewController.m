@@ -12,8 +12,14 @@
 #import "CubeB.h"
 #import "CubeC.h"
 #import "CubeD.h"
+#import "CubeE.h"
+#import "CubeF.h"
+#import "CubeG.h"
 
 @interface ViewController ()
+
+//一共多少中cube，用于getNextCube的时候需要用到
+#define CUBE_TYPE_NUMBER 7
 
 //游戏难度，用于计算cube下降的时间间隔
 @property (nonatomic)int gameLevel;
@@ -25,8 +31,6 @@
 @property (nonatomic,strong)NSMutableArray *cubeIndex;
 //用于存储所有cell的UIImageView
 @property (nonatomic,strong)NSMutableArray *allCells;
-// nextCubeType 0-A 1-B 2-C 3-D
-@property (nonatomic)int nextCubeType;
 //下一个cube
 @property (nonatomic,strong)myCube *nextCube;
 //判断是否碰撞了
@@ -365,7 +369,7 @@
 //在4种cube种随机选一个
 - (void)resetNextCube {
     myCube * cube = [[myCube alloc] init];
-    switch (arc4random()%4) {
+    switch (arc4random()%CUBE_TYPE_NUMBER) {
         case 0:
             cube = [[CubeA alloc]init];
             break;
@@ -377,6 +381,15 @@
             break;
         case 3:
             cube = [[CubeD alloc]init];
+            break;
+        case 4:
+            cube = [[CubeE alloc]init];
+            break;
+        case 5:
+            cube = [[CubeF alloc]init];
+            break;
+        case 6:
+            cube = [[CubeG alloc]init];
             break;
         default:
             cube = [[CubeA alloc]init];

@@ -25,6 +25,12 @@
 		206178691C1180CF0037CA13 /* cubeC.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178651C1180CF0037CA13 /* cubeC.png */; };
 		2061786A1C1180CF0037CA13 /* cubeD.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178661C1180CF0037CA13 /* cubeD.png */; };
 		2061786E1C1189D60037CA13 /* cubeB.png in Resources */ = {isa = PBXBuildFile; fileRef = 2061786D1C1189D60037CA13 /* cubeB.png */; };
+		206178711C11B7C50037CA13 /* CubeE.m in Sources */ = {isa = PBXBuildFile; fileRef = 206178701C11B7C50037CA13 /* CubeE.m */; };
+		206178731C11B8210037CA13 /* cubeE.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178721C11B8210037CA13 /* cubeE.png */; };
+		206178761C11CDE70037CA13 /* cubeF.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178741C11CDE70037CA13 /* cubeF.png */; };
+		206178771C11CDE70037CA13 /* cubeG.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178751C11CDE70037CA13 /* cubeG.png */; };
+		2061787D1C11CE3E0037CA13 /* CubeF.m in Sources */ = {isa = PBXBuildFile; fileRef = 2061787C1C11CE3E0037CA13 /* CubeF.m */; };
+		206178801C11CE790037CA13 /* CubeG.m in Sources */ = {isa = PBXBuildFile; fileRef = 2061787F1C11CE790037CA13 /* CubeG.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +73,15 @@
 		206178651C1180CF0037CA13 /* cubeC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeC.png; path = RussianCube/images/cubeC.png; sourceTree = "<group>"; };
 		206178661C1180CF0037CA13 /* cubeD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeD.png; path = RussianCube/images/cubeD.png; sourceTree = "<group>"; };
 		2061786D1C1189D60037CA13 /* cubeB.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeB.png; path = RussianCube/images/cubeB.png; sourceTree = "<group>"; };
+		2061786F1C11B7C50037CA13 /* CubeE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CubeE.h; path = myCube/CubeE.h; sourceTree = "<group>"; };
+		206178701C11B7C50037CA13 /* CubeE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CubeE.m; path = myCube/CubeE.m; sourceTree = "<group>"; };
+		206178721C11B8210037CA13 /* cubeE.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeE.png; path = RussianCube/images/cubeE.png; sourceTree = "<group>"; };
+		206178741C11CDE70037CA13 /* cubeF.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeF.png; path = RussianCube/images/cubeF.png; sourceTree = "<group>"; };
+		206178751C11CDE70037CA13 /* cubeG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeG.png; path = RussianCube/images/cubeG.png; sourceTree = "<group>"; };
+		2061787B1C11CE3E0037CA13 /* CubeF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CubeF.h; path = myCube/CubeF.h; sourceTree = "<group>"; };
+		2061787C1C11CE3E0037CA13 /* CubeF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CubeF.m; path = myCube/CubeF.m; sourceTree = "<group>"; };
+		2061787E1C11CE790037CA13 /* CubeG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CubeG.h; path = myCube/CubeG.h; sourceTree = "<group>"; };
+		2061787F1C11CE790037CA13 /* CubeG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CubeG.m; path = myCube/CubeG.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +162,9 @@
 				2061786D1C1189D60037CA13 /* cubeB.png */,
 				206178651C1180CF0037CA13 /* cubeC.png */,
 				206178661C1180CF0037CA13 /* cubeD.png */,
+				206178721C11B8210037CA13 /* cubeE.png */,
+				206178741C11CDE70037CA13 /* cubeF.png */,
+				206178751C11CDE70037CA13 /* cubeG.png */,
 				206178611C107B2B0037CA13 /* cubeCell.png */,
 				2061783B1C0FE8740037CA13 /* cubeBox.png */,
 			);
@@ -166,6 +184,12 @@
 				206178521C101FEC0037CA13 /* CubeC.m */,
 				206178541C101FFE0037CA13 /* CubeD.h */,
 				206178551C101FFE0037CA13 /* CubeD.m */,
+				2061786F1C11B7C50037CA13 /* CubeE.h */,
+				206178701C11B7C50037CA13 /* CubeE.m */,
+				2061787B1C11CE3E0037CA13 /* CubeF.h */,
+				2061787C1C11CE3E0037CA13 /* CubeF.m */,
+				2061787E1C11CE790037CA13 /* CubeG.h */,
+				2061787F1C11CE790037CA13 /* CubeG.m */,
 			);
 			name = myCube;
 			sourceTree = "<group>";
@@ -254,11 +278,14 @@
 			files = (
 				2061786E1C1189D60037CA13 /* cubeB.png in Resources */,
 				2061786A1C1180CF0037CA13 /* cubeD.png in Resources */,
+				206178731C11B8210037CA13 /* cubeE.png in Resources */,
 				206178671C1180CF0037CA13 /* cubeA.png in Resources */,
 				2061781B1C0FBC220037CA13 /* LaunchScreen.storyboard in Resources */,
 				206178181C0FBC220037CA13 /* Assets.xcassets in Resources */,
+				206178771C11CDE70037CA13 /* cubeG.png in Resources */,
 				2061783C1C0FE8740037CA13 /* cubeBox.png in Resources */,
 				206178621C107B2B0037CA13 /* cubeCell.png in Resources */,
+				206178761C11CDE70037CA13 /* cubeF.png in Resources */,
 				206178691C1180CF0037CA13 /* cubeC.png in Resources */,
 				206178161C0FBC220037CA13 /* Main.storyboard in Resources */,
 			);
@@ -279,8 +306,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				206178531C101FEC0037CA13 /* CubeC.m in Sources */,
+				2061787D1C11CE3E0037CA13 /* CubeF.m in Sources */,
 				206178491C101E020037CA13 /* myCube.m in Sources */,
 				2061784D1C101FC10037CA13 /* CubeA.m in Sources */,
+				206178801C11CE790037CA13 /* CubeG.m in Sources */,
+				206178711C11B7C50037CA13 /* CubeE.m in Sources */,
 				206178131C0FBC220037CA13 /* ViewController.m in Sources */,
 				206178501C101FCF0037CA13 /* CubeB.m in Sources */,
 				206178561C101FFE0037CA13 /* CubeD.m in Sources */,
