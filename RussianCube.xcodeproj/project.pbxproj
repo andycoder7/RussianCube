@@ -14,6 +14,17 @@
 		206178181C0FBC220037CA13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 206178171C0FBC220037CA13 /* Assets.xcassets */; };
 		2061781B1C0FBC220037CA13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 206178191C0FBC220037CA13 /* LaunchScreen.storyboard */; };
 		206178261C0FBC220037CA13 /* RussianCubeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 206178251C0FBC220037CA13 /* RussianCubeTests.m */; };
+		2061783C1C0FE8740037CA13 /* cubeBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 2061783B1C0FE8740037CA13 /* cubeBox.png */; };
+		206178491C101E020037CA13 /* myCube.m in Sources */ = {isa = PBXBuildFile; fileRef = 206178481C101E020037CA13 /* myCube.m */; };
+		2061784D1C101FC10037CA13 /* CubeA.m in Sources */ = {isa = PBXBuildFile; fileRef = 2061784C1C101FC10037CA13 /* CubeA.m */; };
+		206178501C101FCF0037CA13 /* CubeB.m in Sources */ = {isa = PBXBuildFile; fileRef = 2061784F1C101FCF0037CA13 /* CubeB.m */; };
+		206178531C101FEC0037CA13 /* CubeC.m in Sources */ = {isa = PBXBuildFile; fileRef = 206178521C101FEC0037CA13 /* CubeC.m */; };
+		206178561C101FFE0037CA13 /* CubeD.m in Sources */ = {isa = PBXBuildFile; fileRef = 206178551C101FFE0037CA13 /* CubeD.m */; };
+		206178621C107B2B0037CA13 /* cubeCell.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178611C107B2B0037CA13 /* cubeCell.png */; };
+		206178671C1180CF0037CA13 /* cubeA.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178631C1180CF0037CA13 /* cubeA.png */; };
+		206178691C1180CF0037CA13 /* cubeC.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178651C1180CF0037CA13 /* cubeC.png */; };
+		2061786A1C1180CF0037CA13 /* cubeD.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178661C1180CF0037CA13 /* cubeD.png */; };
+		2061786E1C1189D60037CA13 /* cubeB.png in Resources */ = {isa = PBXBuildFile; fileRef = 2061786D1C1189D60037CA13 /* cubeB.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +51,22 @@
 		206178211C0FBC220037CA13 /* RussianCubeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RussianCubeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		206178251C0FBC220037CA13 /* RussianCubeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RussianCubeTests.m; sourceTree = "<group>"; };
 		206178271C0FBC220037CA13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2061783B1C0FE8740037CA13 /* cubeBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeBox.png; path = RussianCube/images/cubeBox.png; sourceTree = "<group>"; };
+		206178471C101E020037CA13 /* myCube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myCube.h; path = myCube/myCube.h; sourceTree = "<group>"; };
+		206178481C101E020037CA13 /* myCube.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = myCube.m; path = myCube/myCube.m; sourceTree = "<group>"; };
+		2061784B1C101FC10037CA13 /* CubeA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CubeA.h; path = myCube/CubeA.h; sourceTree = "<group>"; };
+		2061784C1C101FC10037CA13 /* CubeA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CubeA.m; path = myCube/CubeA.m; sourceTree = "<group>"; };
+		2061784E1C101FCF0037CA13 /* CubeB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CubeB.h; path = myCube/CubeB.h; sourceTree = "<group>"; };
+		2061784F1C101FCF0037CA13 /* CubeB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CubeB.m; path = myCube/CubeB.m; sourceTree = "<group>"; };
+		206178511C101FEC0037CA13 /* CubeC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubeC.h; sourceTree = "<group>"; };
+		206178521C101FEC0037CA13 /* CubeC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubeC.m; sourceTree = "<group>"; };
+		206178541C101FFE0037CA13 /* CubeD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CubeD.h; path = myCube/CubeD.h; sourceTree = "<group>"; };
+		206178551C101FFE0037CA13 /* CubeD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CubeD.m; path = myCube/CubeD.m; sourceTree = "<group>"; };
+		206178611C107B2B0037CA13 /* cubeCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeCell.png; path = RussianCube/images/cubeCell.png; sourceTree = "<group>"; };
+		206178631C1180CF0037CA13 /* cubeA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeA.png; path = RussianCube/images/cubeA.png; sourceTree = "<group>"; };
+		206178651C1180CF0037CA13 /* cubeC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeC.png; path = RussianCube/images/cubeC.png; sourceTree = "<group>"; };
+		206178661C1180CF0037CA13 /* cubeD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeD.png; path = RussianCube/images/cubeD.png; sourceTree = "<group>"; };
+		2061786D1C1189D60037CA13 /* cubeB.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeB.png; path = RussianCube/images/cubeB.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +90,7 @@
 		206177FF1C0FBC220037CA13 = {
 			isa = PBXGroup;
 			children = (
+				2061783A1C0FDEFB0037CA13 /* images */,
 				2061780A1C0FBC220037CA13 /* RussianCube */,
 				206178241C0FBC220037CA13 /* RussianCubeTests */,
 				206178091C0FBC220037CA13 /* Products */,
@@ -81,6 +109,7 @@
 		2061780A1C0FBC220037CA13 /* RussianCube */ = {
 			isa = PBXGroup;
 			children = (
+				2061784A1C101E070037CA13 /* myCube */,
 				2061780E1C0FBC220037CA13 /* AppDelegate.h */,
 				2061780F1C0FBC220037CA13 /* AppDelegate.m */,
 				206178111C0FBC220037CA13 /* ViewController.h */,
@@ -109,6 +138,36 @@
 				206178271C0FBC220037CA13 /* Info.plist */,
 			);
 			path = RussianCubeTests;
+			sourceTree = "<group>";
+		};
+		2061783A1C0FDEFB0037CA13 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				206178631C1180CF0037CA13 /* cubeA.png */,
+				2061786D1C1189D60037CA13 /* cubeB.png */,
+				206178651C1180CF0037CA13 /* cubeC.png */,
+				206178661C1180CF0037CA13 /* cubeD.png */,
+				206178611C107B2B0037CA13 /* cubeCell.png */,
+				2061783B1C0FE8740037CA13 /* cubeBox.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
+		2061784A1C101E070037CA13 /* myCube */ = {
+			isa = PBXGroup;
+			children = (
+				206178471C101E020037CA13 /* myCube.h */,
+				206178481C101E020037CA13 /* myCube.m */,
+				2061784B1C101FC10037CA13 /* CubeA.h */,
+				2061784C1C101FC10037CA13 /* CubeA.m */,
+				2061784E1C101FCF0037CA13 /* CubeB.h */,
+				2061784F1C101FCF0037CA13 /* CubeB.m */,
+				206178511C101FEC0037CA13 /* CubeC.h */,
+				206178521C101FEC0037CA13 /* CubeC.m */,
+				206178541C101FFE0037CA13 /* CubeD.h */,
+				206178551C101FFE0037CA13 /* CubeD.m */,
+			);
+			name = myCube;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,8 +252,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2061786E1C1189D60037CA13 /* cubeB.png in Resources */,
+				2061786A1C1180CF0037CA13 /* cubeD.png in Resources */,
+				206178671C1180CF0037CA13 /* cubeA.png in Resources */,
 				2061781B1C0FBC220037CA13 /* LaunchScreen.storyboard in Resources */,
 				206178181C0FBC220037CA13 /* Assets.xcassets in Resources */,
+				2061783C1C0FE8740037CA13 /* cubeBox.png in Resources */,
+				206178621C107B2B0037CA13 /* cubeCell.png in Resources */,
+				206178691C1180CF0037CA13 /* cubeC.png in Resources */,
 				206178161C0FBC220037CA13 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,7 +278,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				206178531C101FEC0037CA13 /* CubeC.m in Sources */,
+				206178491C101E020037CA13 /* myCube.m in Sources */,
+				2061784D1C101FC10037CA13 /* CubeA.m in Sources */,
 				206178131C0FBC220037CA13 /* ViewController.m in Sources */,
+				206178501C101FCF0037CA13 /* CubeB.m in Sources */,
+				206178561C101FFE0037CA13 /* CubeD.m in Sources */,
 				206178101C0FBC220037CA13 /* AppDelegate.m in Sources */,
 				2061780D1C0FBC220037CA13 /* main.m in Sources */,
 			);
@@ -402,6 +472,7 @@
 				2061782C1C0FBC220037CA13 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2061782D1C0FBC220037CA13 /* Build configuration list for PBXNativeTarget "RussianCubeTests" */ = {
 			isa = XCConfigurationList;
@@ -410,6 +481,7 @@
 				2061782F1C0FBC220037CA13 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
