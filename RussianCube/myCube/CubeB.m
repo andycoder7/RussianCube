@@ -26,7 +26,7 @@
 // 04 05 15 16 -> 05 14 15 24
 - (void)rotateCube {
     if (self.rotateTimes%2 == 0) {
-        if ([self.subCubes[1] integerValue]%10 != 9) {
+        if ([self.subCubes[2] integerValue]%10 != 9) {
             // | -> - 没破右界
             [self.subCubes replaceObjectAtIndex:0 withObject:@([self.subCubes[0] integerValue]-1)];
             [self.subCubes replaceObjectAtIndex:1 withObject:@([self.subCubes[1] integerValue]-9)];
@@ -49,7 +49,7 @@
 - (void)rotateBack {
     if (self.rotateTimes > 0) {
         if (self.rotateTimes%2 == 0) {
-            if ([self.subCubes[1] integerValue]%10 != 9) {
+            if ([self.subCubes[2] integerValue]%10 != 9) {
                 // | -> - 没破右界
                 [self.subCubes replaceObjectAtIndex:0 withObject:@([self.subCubes[0] integerValue]-1)];
                 [self.subCubes replaceObjectAtIndex:1 withObject:@([self.subCubes[1] integerValue]-9)];

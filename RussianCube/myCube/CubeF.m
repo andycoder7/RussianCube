@@ -28,7 +28,7 @@
 - (void)rotateCube {
     switch (self.rotateTimes%4) {
         case 0:
-            if ([self.subCubes[2] integerValue]%10 != 9) {
+            if ([self.subCubes[1] integerValue]%10 != 9) {
                 // _| 顺时针90度  没破右界
                 [self.subCubes replaceObjectAtIndex:0 withObject:@([self.subCubes[0] integerValue]+9)];
                 [self.subCubes replaceObjectAtIndex:1 withObject:@([self.subCubes[1] integerValue]+9)];
@@ -77,7 +77,7 @@
         switch (self.rotateTimes%4) {
             case 0:
                 if ([self.subCubes[2] integerValue]%10 != 0) {
-                    //  L 逆时针转90度 没破左界
+                    // 逆时针转90度 没破左界
                     [self.subCubes replaceObjectAtIndex:0 withObject:@([self.subCubes[0] integerValue]+8)];
                     [self.subCubes replaceObjectAtIndex:1 withObject:@([self.subCubes[1] integerValue]-1)];
                     [self.subCubes replaceObjectAtIndex:2 withObject:@([self.subCubes[2] integerValue]-9)];
@@ -86,7 +86,7 @@
                 break;
             case 1:
                 if ([self.subCubes[0] integerValue]-9 >= 0) {
-                    // |—— 逆时针转90度 没破上界
+                    // 逆时针转90度 没破上界
                     [self.subCubes replaceObjectAtIndex:0 withObject:@([self.subCubes[0] integerValue]-9)];
                     [self.subCubes replaceObjectAtIndex:1 withObject:@([self.subCubes[1] integerValue]-9)];
                     [self.subCubes replaceObjectAtIndex:2 withObject:@([self.subCubes[2] integerValue]-1)];
@@ -96,7 +96,7 @@
                 break;
             case 2:
                 if ([self.subCubes[1] integerValue]%10 != 9) {
-                    // -| 逆时针转90度 没破右界
+                    // 逆时针转90度 没破右界
                     [self.subCubes replaceObjectAtIndex:1 withObject:@([self.subCubes[1] integerValue]+9)];
                     [self.subCubes replaceObjectAtIndex:2 withObject:@([self.subCubes[2] integerValue]+1)];
                     [self.subCubes replaceObjectAtIndex:3 withObject:@([self.subCubes[3] integerValue]-8)];
@@ -105,7 +105,7 @@
                 break;
             case 3:
                 if ([self.subCubes[3] integerValue]+9 < 200) {
-                    // ___| 逆时针转90度 没破下界
+                    // 逆时针转90度 没破下界
                     [self.subCubes replaceObjectAtIndex:0 withObject:@([self.subCubes[0] integerValue]+1)];
                     [self.subCubes replaceObjectAtIndex:1 withObject:@([self.subCubes[1] integerValue]+1)];
                     [self.subCubes replaceObjectAtIndex:2 withObject:@([self.subCubes[2] integerValue]+9)];
