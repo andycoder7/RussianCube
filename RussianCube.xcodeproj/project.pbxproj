@@ -50,6 +50,8 @@
 		206178B81C127CB70037CA13 /* tab_bar_button_compose_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178A61C127CB70037CA13 /* tab_bar_button_compose_selected@2x.png */; };
 		206178B91C127CB70037CA13 /* tab_bar_button_compose_unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178A71C127CB70037CA13 /* tab_bar_button_compose_unselected.png */; };
 		206178BA1C127CB70037CA13 /* tab_bar_button_compose_unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178A81C127CB70037CA13 /* tab_bar_button_compose_unselected@2x.png */; };
+		206178BF1C14215F0037CA13 /* callDragon.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178BD1C14215F0037CA13 /* callDragon.png */; };
+		206178C01C14215F0037CA13 /* callDragon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178BE1C14215F0037CA13 /* callDragon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +123,8 @@
 		206178A61C127CB70037CA13 /* tab_bar_button_compose_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab_bar_button_compose_selected@2x.png"; path = "RussianCube/images/TumblrMenu/tab_bar_button_compose_selected@2x.png"; sourceTree = "<group>"; };
 		206178A71C127CB70037CA13 /* tab_bar_button_compose_unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tab_bar_button_compose_unselected.png; path = RussianCube/images/TumblrMenu/tab_bar_button_compose_unselected.png; sourceTree = "<group>"; };
 		206178A81C127CB70037CA13 /* tab_bar_button_compose_unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab_bar_button_compose_unselected@2x.png"; path = "RussianCube/images/TumblrMenu/tab_bar_button_compose_unselected@2x.png"; sourceTree = "<group>"; };
+		206178BD1C14215F0037CA13 /* callDragon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = callDragon.png; path = RussianCube/images/TumblrMenu/callDragon.png; sourceTree = "<group>"; };
+		206178BE1C14215F0037CA13 /* callDragon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "callDragon@2x.png"; path = "RussianCube/images/TumblrMenu/callDragon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +202,8 @@
 		2061783A1C0FDEFB0037CA13 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				206178BD1C14215F0037CA13 /* callDragon.png */,
+				206178BE1C14215F0037CA13 /* callDragon@2x.png */,
 				206178851C127C780037CA13 /* cubeA.png */,
 				206178861C127C780037CA13 /* cubeB.png */,
 				206178871C127C780037CA13 /* cubeBox.png */,
@@ -349,10 +355,12 @@
 				206178B61C127CB70037CA13 /* post_type_bubble_video@2x.png in Resources */,
 				206178B21C127CB70037CA13 /* post_type_bubble_quote@2x.png in Resources */,
 				206178AA1C127CB70037CA13 /* modal_background@2x.png in Resources */,
+				206178C01C14215F0037CA13 /* callDragon@2x.png in Resources */,
 				206178931C127C780037CA13 /* cubeD.png in Resources */,
 				206178AB1C127CB70037CA13 /* post_type_bubble_chat.png in Resources */,
 				206178911C127C780037CA13 /* cubeC.png in Resources */,
 				206178B41C127CB70037CA13 /* post_type_bubble_text@2x.png in Resources */,
+				206178BF1C14215F0037CA13 /* callDragon.png in Resources */,
 				206178A91C127CB70037CA13 /* modal_background.png in Resources */,
 				206178941C127C780037CA13 /* cubeE.png in Resources */,
 				206178BA1C127CB70037CA13 /* tab_bar_button_compose_unselected@2x.png in Resources */,

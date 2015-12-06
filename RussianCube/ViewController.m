@@ -81,7 +81,7 @@
     //初始化碰撞判定为YES，在goDown中用到
     self.crashed = YES;
     self.currentCube = nil;
-    self.nextCube = [self getNextCube];
+    self.nextCube = [self getNextCube:CUBE_TYPE_NUMBER];
     self.theLock = [[NSLock alloc] init];
     
     //启动方块降落的计时器
@@ -154,7 +154,6 @@
 
 //掉方块，如果crash了，就新建一个方块
 - (void)goDown {
-    NSLog(@"goDown,%@", self.crashed?@"YES":@"NO");
     if (self.crashed) {
         self.currentCube = [self getCurrentCube];
         [self addCrashFlagOfCube];
@@ -166,7 +165,6 @@
         //结束判定
         if ([self isDownCrashed]) {
             [self died];
-            NSLog(@"died");
             return;
         }
         self.crashed = NO;
@@ -272,7 +270,7 @@
 //初始化其速度和位置
 - (myCube *)getCurrentCube {
     myCube * cube = self.nextCube;
-    self.nextCube = [self getNextCube];
+    self.nextCube = [self getNextCube:CUBE_TYPE_NUMBER];
     cube.speed = 2.0/(self.gameLevel+1);
     
     //把所有的cell添加到allCell中
@@ -286,9 +284,12 @@
 }
 
 //在多种cube种随机选一个，并显示在预览窗口
-- (myCube *)getNextCube {
+- (myCube *)getNextCube:(int)cubeType {
     myCube * cube = [[myCube alloc] init];
-    switch (arc4random()%CUBE_TYPE_NUMBER) {
+    if (cubeType < 0 || cubeType >= CUBE_TYPE_NUMBER) {
+        cubeType = arc4random()%CUBE_TYPE_NUMBER;
+    }
+    switch (cubeType) {
         case 0:
             cube = [[CubeA alloc]init];
             break;
@@ -537,8 +538,9 @@
     [self.view removeGestureRecognizer:self.pan];
     
     CHTumblrMenuView *menuView = [[CHTumblrMenuView alloc] init];
-    [menuView addMenuItemWithTitle:@"Text" andIcon:[UIImage imageNamed:@"post_type_bubble_text.png"] andSelectedBlock:^{
+    [menuView addMenuItemWithTitle:@"召唤" andIcon:[UIImage imageNamed:@"callDragon.png"] andSelectedBlock:^{
         NSLog(@"Text selected");
+        self.nextCube = [self getNextCube:3];
         [self.cubeDown setFireDate:[NSDate date]];
         [self.view addGestureRecognizer:self.tap];
         [self.view addGestureRecognizer:self.pan];
