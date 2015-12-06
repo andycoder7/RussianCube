@@ -539,15 +539,13 @@
     
     CHTumblrMenuView *menuView = [[CHTumblrMenuView alloc] init];
     [menuView addMenuItemWithTitle:@"召唤" andIcon:[UIImage imageNamed:@"callDragon.png"] andSelectedBlock:^{
-        NSLog(@"Text selected");
         self.nextCube = [self getNextCube:3];
         [self.cubeDown setFireDate:[NSDate date]];
         [self.view addGestureRecognizer:self.tap];
         [self.view addGestureRecognizer:self.pan];
     }];
-    [menuView addMenuItemWithTitle:@"Photo" andIcon:[UIImage imageNamed:@"post_type_bubble_photo.png"] andSelectedBlock:^{
-        NSLog(@"Photo selected");
-        [self.cubeDown setFireDate:[NSDate date]];
+    [menuView addMenuItemWithTitle:@"CLEAR!" andIcon:[UIImage imageNamed:@"clear.png"] andSelectedBlock:^{
+        [self clearCubeBox];
         [self.view addGestureRecognizer:self.tap];
         [self.view addGestureRecognizer:self.pan];
     }];
@@ -577,6 +575,29 @@
     }];
     
     [menuView show];
+}
+
+- (void)clearCubeBox {
+    
+    //删除所有cell
+    for (int i = (int)(self.allCells.count)-1; i >= 0; i--) {
+        [(UIImageView *)(self.allCells[i]) removeFromSuperview];
+        [self.allCells removeObjectAtIndex:i];
+    }
+    //重置cubeIndex
+    for (int i = 0; i < 10*20; i++) {
+        [self.cubeIndex replaceObjectAtIndex:i withObject:@NO];
+    }
+    self.currentCube = nil;
+    self.nextCube = [self getNextCube:CUBE_TYPE_NUMBER];
+    self.currentCube = [self getCurrentCube];
+    self.crashed = YES;
+    //继续游戏
+    //如果存在则销毁定时器
+    if (self.cubeDown != nil) {
+        [self.cubeDown invalidate];
+    }
+    self.cubeDown = [NSTimer scheduledTimerWithTimeInterval:self.currentCube.speed target:self selector:@selector(goDown) userInfo:nil repeats:NO];
 }
 
 - (void)whosyourdaddy {

@@ -52,6 +52,8 @@
 		206178BA1C127CB70037CA13 /* tab_bar_button_compose_unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178A81C127CB70037CA13 /* tab_bar_button_compose_unselected@2x.png */; };
 		206178BF1C14215F0037CA13 /* callDragon.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178BD1C14215F0037CA13 /* callDragon.png */; };
 		206178C01C14215F0037CA13 /* callDragon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178BE1C14215F0037CA13 /* callDragon@2x.png */; };
+		206178C31C145A0A0037CA13 /* clear.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178C11C145A0A0037CA13 /* clear.png */; };
+		206178C41C145A0A0037CA13 /* clear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178C21C145A0A0037CA13 /* clear@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +127,8 @@
 		206178A81C127CB70037CA13 /* tab_bar_button_compose_unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab_bar_button_compose_unselected@2x.png"; path = "RussianCube/images/TumblrMenu/tab_bar_button_compose_unselected@2x.png"; sourceTree = "<group>"; };
 		206178BD1C14215F0037CA13 /* callDragon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = callDragon.png; path = RussianCube/images/TumblrMenu/callDragon.png; sourceTree = "<group>"; };
 		206178BE1C14215F0037CA13 /* callDragon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "callDragon@2x.png"; path = "RussianCube/images/TumblrMenu/callDragon@2x.png"; sourceTree = "<group>"; };
+		206178C11C145A0A0037CA13 /* clear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clear.png; path = RussianCube/images/TumblrMenu/clear.png; sourceTree = "<group>"; };
+		206178C21C145A0A0037CA13 /* clear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clear@2x.png"; path = "RussianCube/images/TumblrMenu/clear@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +206,8 @@
 		2061783A1C0FDEFB0037CA13 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				206178C11C145A0A0037CA13 /* clear.png */,
+				206178C21C145A0A0037CA13 /* clear@2x.png */,
 				206178BD1C14215F0037CA13 /* callDragon.png */,
 				206178BE1C14215F0037CA13 /* callDragon@2x.png */,
 				206178851C127C780037CA13 /* cubeA.png */,
@@ -371,6 +377,7 @@
 				206178AD1C127CB70037CA13 /* post_type_bubble_link.png in Resources */,
 				2061788E1C127C780037CA13 /* cubeA.png in Resources */,
 				2061781B1C0FBC220037CA13 /* LaunchScreen.storyboard in Resources */,
+				206178C31C145A0A0037CA13 /* clear.png in Resources */,
 				206178B71C127CB70037CA13 /* tab_bar_button_compose_selected.png in Resources */,
 				206178961C127C780037CA13 /* cubeG.png in Resources */,
 				206178AC1C127CB70037CA13 /* post_type_bubble_chat@2x.png in Resources */,
@@ -381,6 +388,7 @@
 				206178B01C127CB70037CA13 /* post_type_bubble_photo@2x.png in Resources */,
 				206178921C127C780037CA13 /* cubeCell.png in Resources */,
 				206178B81C127CB70037CA13 /* tab_bar_button_compose_selected@2x.png in Resources */,
+				206178C41C145A0A0037CA13 /* clear@2x.png in Resources */,
 				206178161C0FBC220037CA13 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
