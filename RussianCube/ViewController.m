@@ -154,19 +154,21 @@
 
 //掉方块，如果crash了，就新建一个方块
 - (void)goDown {
+    NSLog(@"goDown,%@", self.crashed?@"YES":@"NO");
     if (self.crashed) {
         self.currentCube = [self getCurrentCube];
         [self addCrashFlagOfCube];
-        //结束判定
-        if ([self isDownCrashed]) {
-            [self died];
-            return;
-        }
         //把方块的四个cell添加到界面上
         [self.view addSubview:self.currentCube.subCube1];
         [self.view addSubview:self.currentCube.subCube2];
         [self.view addSubview:self.currentCube.subCube3];
         [self.view addSubview:self.currentCube.subCube4];
+        //结束判定
+        if ([self isDownCrashed]) {
+            [self died];
+            NSLog(@"died");
+            return;
+        }
         self.crashed = NO;
     } else {
         [self.theLock lock];
@@ -225,7 +227,6 @@
 
 
 - (void)died {
-    [self.cubeDown setFireDate:[NSDate distantFuture]];
     UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"呵呵哒 挂了吧 😄" message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *actionSure = [UIAlertAction actionWithTitle:@"嗯，我挂了 😭"
                                                          style:UIAlertActionStyleDestructive
@@ -235,13 +236,36 @@
     UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"我怎么可能死 😡"
                                                            style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                             
+                                                             [self restartGame];
                                                          }];
     [alertController addAction:actionSure];
     [alertController addAction:actionCancel];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+- (void)restartGame {
+    //重置级别和分数
+    self.gameLevel = 1;
+    [self.gameLevelLabelValue setText:[NSString stringWithFormat:@"%d", self.gameLevel]];
+    self.gameScore = 0;
+    [self.gameScoreLabelValue setText:[NSString stringWithFormat:@"%ld",self.gameScore]];
+    
+    //删除所有cell
+    for (int i = (int)(self.allCells.count)-1; i >= 0; i--) {
+        [(UIImageView *)(self.allCells[i]) removeFromSuperview];
+        [self.allCells removeObjectAtIndex:i];
+    }
+    //重置cubeIndex
+    for (int i = 0; i < 10*20; i++) {
+        [self.cubeIndex replaceObjectAtIndex:i withObject:@NO];
+    }
+    //继续游戏
+    //如果存在则销毁定时器
+    if (self.cubeDown != nil) {
+        [self.cubeDown invalidate];
+    }
+    self.cubeDown = [NSTimer scheduledTimerWithTimeInterval:self.currentCube.speed target:self selector:@selector(goDown) userInfo:nil repeats:NO];
+}
 
 # pragma mark --为其他方法服务的函数
 
