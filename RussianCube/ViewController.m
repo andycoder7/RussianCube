@@ -16,6 +16,7 @@
 #import "CubeF.h"
 #import "CubeG.h"
 #import "CHTumblrMenuView.h"
+#import "GameMenuTableViewController.h"
 
 @interface ViewController ()
 
@@ -52,8 +53,17 @@
 @property (nonatomic,strong)NSLock *theLock;
 //自定义轻拍手势
 @property (nonatomic,strong)UITapGestureRecognizer *tap;
+//自定义菜单出现时的轻拍手势
+@property (nonatomic,strong)UITapGestureRecognizer *menuTap;
 //自定义平移手势
 @property (nonatomic,strong)UIPanGestureRecognizer *pan;
+//菜单
+@property (nonatomic,strong)UIView *gameMenuView;
+//游戏
+@property (nonatomic,strong)UIView *gameView;
+//暂停
+@property (nonatomic,strong)UIView *pauseView;
+@property (nonatomic,strong)GameMenuTableViewController *gameMenuTVC;
 @end
 
 @implementation ViewController
@@ -74,6 +84,9 @@
     for (int i = 0; i < 10*20; i++) {
         [self.cubeIndex addObject:@NO];
     }
+    //初始化菜单控制类
+    self.gameMenuTVC = [[GameMenuTableViewController alloc] init];
+    self.gameMenuTVC.rootViewController = self;
     
     //初始化最初的界面
     [self initUI];
@@ -88,10 +101,10 @@
     self.cubeDown = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(goDown) userInfo:nil repeats:NO];
     //平移手势
     self.pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveCube:)];
-    [self.view addGestureRecognizer:self.pan];
+    [self.gameView addGestureRecognizer:self.pan];
     //轻拍手势
     self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rotateCube)];
-    [self.view addGestureRecognizer:self.tap];
+    [self.gameView addGestureRecognizer:self.tap];
     
 }
 
@@ -99,46 +112,54 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (void)initUI {
+    self.gameView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.view addSubview:self.gameView];
     //俄罗斯方块的主体盒子
     UIImageView *cubeBox = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cubeBox.png"]];
-    [self.view addSubview:cubeBox];
+    [self.gameView addSubview:cubeBox];
     //游戏的标题
-    UILabel *gameTitle = [[UILabel alloc] initWithFrame:CGRectMake((self.view.frame.size.width - 200)/2, 25, 200, 40)];
+    UILabel *gameTitle = [[UILabel alloc] initWithFrame:CGRectMake((self.gameView.frame.size.width - 200)/2, 25, 200, 40)];
     [gameTitle setText:@"Russian Cube"];
     [gameTitle setTextAlignment:NSTextAlignmentCenter];
     gameTitle.font = [UIFont boldSystemFontOfSize:20];
-    [self.view addSubview:gameTitle];
+    [self.gameView addSubview:gameTitle];
+    //游戏菜单按钮 (丑！ 还要改！！！)
+    UIButton *gameMenu = [[UIButton alloc] initWithFrame:CGRectMake(5, 30, 35, 35)];
+    [gameMenu setImage:[UIImage imageNamed:@"gameMenu.png"] forState:UIControlStateNormal];
+    [gameMenu addTarget:self action:@selector(showGameMenu) forControlEvents:UIControlEventTouchUpInside];
+    [self.gameView addSubview:gameMenu];
     //游戏级别
     UILabel *gameLevelLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 200, 75, 20)];
     [gameLevelLabel setText:@"- LEVEL -"];
     [gameLevelLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:gameLevelLabel];
+    [self.gameView addSubview:gameLevelLabel];
     //游戏级别的值
     self.gameLevelLabelValue = [[UILabel alloc] initWithFrame:CGRectMake(300, 220, 75, 20)];
     [self.gameLevelLabelValue setText:[NSString stringWithFormat:@"%d",self.gameLevel]];
     [self.gameLevelLabelValue setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:self.gameLevelLabelValue];
+    [self.gameView addSubview:self.gameLevelLabelValue];
     //游戏得分
     UILabel *gameScoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 250, 75, 20)];
     [gameScoreLabel setText:@"-SCORE-"];
     [gameScoreLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:gameScoreLabel];
+    [self.gameView addSubview:gameScoreLabel];
     //游戏得分的值
     self.gameScoreLabelValue = [[UILabel alloc] initWithFrame:CGRectMake(300, 270, 75, 20)];
     [self.gameScoreLabelValue setText:[NSString stringWithFormat:@"%ld",self.gameScore]];
     [self.gameScoreLabelValue setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:self.gameScoreLabelValue];
+    [self.gameView addSubview:self.gameScoreLabelValue];
     //游戏最高得分记录
     UILabel *gameScoreRecordLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 300, 75, 20)];
     [gameScoreRecordLabel setText:@"-Record-"];
     [gameScoreRecordLabel setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:gameScoreRecordLabel];
+    [self.gameView addSubview:gameScoreRecordLabel];
     //游戏最高得分记录的值
     self.gameScoreRecordLabelValue = [[UILabel alloc] initWithFrame:CGRectMake(300, 320, 75, 20)];
     [self.gameScoreRecordLabelValue setText:[NSString stringWithFormat:@"%ld",self.gameScoreRecord]];
     [self.gameScoreRecordLabelValue setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:self.gameScoreRecordLabelValue];
+    [self.gameView addSubview:self.gameScoreRecordLabelValue];
 
     //开挂按钮，后期要改掉的
     UIButton *whosyourdaddy = [[UIButton alloc] initWithFrame:CGRectMake(300, 350, 75, 20)];
@@ -146,45 +167,10 @@
     whosyourdaddy.layer.borderWidth = 1;
     whosyourdaddy.layer.borderColor = [[UIColor blueColor]CGColor];
     [whosyourdaddy setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-//    [whosyourdaddy addTarget:self action:@selector(whosyourdaddy) forControlEvents:UIControlEventTouchDown];
-    [whosyourdaddy addTarget:self action:@selector(showMenu) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:whosyourdaddy];
+    [whosyourdaddy addTarget:self action:@selector(whosyourdaddy) forControlEvents:UIControlEventTouchUpInside];
+    [self.gameView addSubview:whosyourdaddy];
 }
 
-
-//掉方块，如果crash了，就新建一个方块
-- (void)goDown {
-    if (self.crashed) {
-        self.currentCube = [self getCurrentCube];
-        [self addCrashFlagOfCube];
-        //把方块的四个cell添加到界面上
-        [self.view addSubview:self.currentCube.subCube1];
-        [self.view addSubview:self.currentCube.subCube2];
-        [self.view addSubview:self.currentCube.subCube3];
-        [self.view addSubview:self.currentCube.subCube4];
-        //结束判定
-        if ([self isDownCrashed]) {
-            [self died];
-            return;
-        }
-        self.crashed = NO;
-    } else {
-        [self.theLock lock];
-        if ([self isDownCrashed]) {
-            self.crashed = YES;
-            [self checkScore];
-        } else {
-            [self removeCrashFlagOfCube];
-            for (int i = (int)([self.currentCube.subCubes count]-1); i >= 0; i--) {
-                [self.currentCube.subCubes replaceObjectAtIndex:i withObject:@([self.currentCube.subCubes[i] integerValue]+10)];
-            }
-            [self addCrashFlagOfCube];
-            [self setCenterForCube:self.currentCube];
-        }
-        [self.theLock unlock];
-    }
-    self.cubeDown = [NSTimer scheduledTimerWithTimeInterval:self.currentCube.speed target:self selector:@selector(goDown) userInfo:nil repeats:NO];
-}
 
 //检查是否有行满足消去的条件，并改变得分和难度
 - (void)checkScore {
@@ -223,7 +209,6 @@
     }
 }
 
-
 - (void)died {
     UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"呵呵哒 挂了吧 😄" message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *actionSure = [UIAlertAction actionWithTitle:@"嗯，我挂了 😭"
@@ -248,23 +233,119 @@
     self.gameScore = 0;
     [self.gameScoreLabelValue setText:[NSString stringWithFormat:@"%ld",self.gameScore]];
     
-    //删除所有cell
-    for (int i = (int)(self.allCells.count)-1; i >= 0; i--) {
-        [(UIImageView *)(self.allCells[i]) removeFromSuperview];
-        [self.allCells removeObjectAtIndex:i];
-    }
-    //重置cubeIndex
-    for (int i = 0; i < 10*20; i++) {
-        [self.cubeIndex replaceObjectAtIndex:i withObject:@NO];
-    }
-    //继续游戏
-    //如果存在则销毁定时器
-    if (self.cubeDown != nil) {
-        [self.cubeDown invalidate];
+    [self clearCubeBox];
+}
+
+#pragma mark -- 菜单功能的相关函数
+
+- (void)restartGameForMenu {
+    [self closeGameMenu];
+    [self restartGame];
+}
+
+- (void)pauseGameForMenu {
+    [self closeGameMenu];
+    //暂停游戏
+    [self.cubeDown setFireDate:[NSDate distantFuture]];
+    [self.gameView removeGestureRecognizer:self.tap];
+    [self.gameView removeGestureRecognizer:self.pan];
+    //
+    self.pauseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    self.pauseView.backgroundColor = [UIColor blackColor];
+    self.pauseView.alpha = 0.3;
+    [self.view addSubview:self.pauseView];
+    UIButton *continueGameButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-100)/2, (self.view.frame.size.height-100)/2, 100, 100)];
+    [continueGameButton setTitle:@"Continue" forState:UIControlStateNormal];
+    [continueGameButton addTarget:self action:@selector(continueGame) forControlEvents:UIControlEventTouchUpInside];
+    [self.pauseView addSubview:continueGameButton];
+}
+
+
+# pragma mark --各种selector中的回调函数
+
+//掉方块，如果crash了，就新建一个方块
+- (void)goDown {
+    if (self.crashed) {
+        self.currentCube = [self getCurrentCube];
+        [self addCrashFlagOfCube];
+        //把方块的四个cell添加到界面上
+        [self.gameView addSubview:self.currentCube.subCube1];
+        [self.gameView addSubview:self.currentCube.subCube2];
+        [self.gameView addSubview:self.currentCube.subCube3];
+        [self.gameView addSubview:self.currentCube.subCube4];
+        //结束判定
+        if ([self isDownCrashed]) {
+            [self died];
+            return;
+        }
+        self.crashed = NO;
+    } else {
+        [self.theLock lock];
+        if ([self isDownCrashed]) {
+            self.crashed = YES;
+            [self checkScore];
+        } else {
+            [self removeCrashFlagOfCube];
+            for (int i = (int)([self.currentCube.subCubes count]-1); i >= 0; i--) {
+                [self.currentCube.subCubes replaceObjectAtIndex:i withObject:@([self.currentCube.subCubes[i] integerValue]+10)];
+            }
+            [self addCrashFlagOfCube];
+            [self setCenterForCube:self.currentCube];
+        }
+        [self.theLock unlock];
     }
     self.cubeDown = [NSTimer scheduledTimerWithTimeInterval:self.currentCube.speed target:self selector:@selector(goDown) userInfo:nil repeats:NO];
 }
 
+// 显示游戏菜单
+- (void)showGameMenu {
+    if (self.gameMenuView) {
+        //点击了菜单之后，用户可能会再次点击菜单按钮以试图关闭菜单。
+        [self closeGameMenu];
+        return;
+    }
+    //暂停游戏先~
+    [self.cubeDown setFireDate:[NSDate distantFuture]];
+    [self.gameView removeGestureRecognizer:self.tap];
+    [self.gameView removeGestureRecognizer:self.pan];
+    
+    //创建游戏菜单view
+    self.gameMenuView = [[UIView alloc] initWithFrame:CGRectMake(1, 68, 150, 200)]; // 200=20+45x4 150=30+120
+    [self.gameMenuView setBackgroundColor:[UIColor grayColor]];
+    //创建菜单view中的tableview
+    self.gameMenuTVC.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, 150, 180)];
+    //关闭回弹效果
+    [self.gameMenuTVC.tableView setBounces:NO];
+    self.gameMenuTVC.tableView.delegate = self.gameMenuTVC;
+    self.gameMenuTVC.tableView.dataSource = self.gameMenuTVC;
+    
+    [self.gameMenuView addSubview:self.gameMenuTVC.tableView];
+    [self.view addSubview:self.gameMenuView];
+    //添加关闭菜单的手势
+    self.menuTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeGameMenu)];
+    [self.gameView addGestureRecognizer:self.menuTap];
+}
+
+//关闭游戏菜单
+- (void)closeGameMenu {
+    if (self.gameMenuView != nil) {
+        [self.gameMenuView removeFromSuperview];
+        self.gameMenuView = nil;
+    }
+    [self.gameView removeGestureRecognizer:self.menuTap];
+    //继续游戏
+    [self continueGame];
+}
+
+- (void)continueGame {
+    if (self.pauseView != nil) {
+        [self.pauseView removeFromSuperview];
+        self.pauseView = nil;
+    }
+    [self.cubeDown setFireDate:[NSDate date]];
+    [self.gameView addGestureRecognizer:self.tap];
+    [self.gameView addGestureRecognizer:self.pan];
+}
 # pragma mark --为其他方法服务的函数
 
 //初始化其速度和位置
@@ -320,7 +401,7 @@
     if (self.nextCube != nil) {
         [self.nextCube.previewCube removeFromSuperview];
     }
-    [self.view addSubview:cube.previewCube];
+    [self.gameView addSubview:cube.previewCube];
     return cube;
 }
 
@@ -357,7 +438,7 @@
         if ([self.cubeIndex[i] boolValue] == YES) {
             UIImageView *tempCell = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cubeCell.png"]];
             tempCell.center = CGPointMake([self getCenterXFromCubeIndex:i], [self getCenterYFromCubeIndex:i]);
-            [self.view addSubview:tempCell];
+            [self.gameView addSubview:tempCell];
             [self.allCells addObject:tempCell];
         }
     }
@@ -378,14 +459,14 @@
 # pragma mark --对cube的操作（平移、旋转、下降）
 //平移手势中的回调函数，用于获取手势移动的距离，然后判断是否需要平移cube
 - (void)moveCube:(UIPanGestureRecognizer *)sender {
-    CGPoint deltaPoint = [sender translationInView:self.view];
+    CGPoint deltaPoint = [sender translationInView:self.gameView];
     if (deltaPoint.x < -15 || deltaPoint.x > 15) {
         [self horizontalMove:(int)(deltaPoint.x)];
-        [sender setTranslation:CGPointZero inView:self.view];
+        [sender setTranslation:CGPointZero inView:self.gameView];
     }
     if (deltaPoint.y > 50) {
         [self downToBottom];
-        [sender setTranslation:CGPointZero inView:self.view];
+        [sender setTranslation:CGPointZero inView:self.gameView];
     }
 }
 
@@ -531,44 +612,45 @@
 // 以下是挂逼相关的代码
 # pragma mark --whosyourdaddy
 
-- (void)showMenu{
+- (void)whosyourdaddy{
+    [self closeGameMenu];
     //暂停游戏先~
     [self.cubeDown setFireDate:[NSDate distantFuture]];
-    [self.view removeGestureRecognizer:self.tap];
-    [self.view removeGestureRecognizer:self.pan];
+    [self.gameView removeGestureRecognizer:self.tap];
+    [self.gameView removeGestureRecognizer:self.pan];
     
     CHTumblrMenuView *menuView = [[CHTumblrMenuView alloc] init];
     [menuView addMenuItemWithTitle:@"召唤" andIcon:[UIImage imageNamed:@"callDragon.png"] andSelectedBlock:^{
         self.nextCube = [self getNextCube:3];
         [self.cubeDown setFireDate:[NSDate date]];
-        [self.view addGestureRecognizer:self.tap];
-        [self.view addGestureRecognizer:self.pan];
+        [self.gameView addGestureRecognizer:self.tap];
+        [self.gameView addGestureRecognizer:self.pan];
     }];
     [menuView addMenuItemWithTitle:@"清除" andIcon:[UIImage imageNamed:@"clear.png"] andSelectedBlock:^{
         [self clearCubeBox];
-        [self.view addGestureRecognizer:self.tap];
-        [self.view addGestureRecognizer:self.pan];
+        [self.gameView addGestureRecognizer:self.tap];
+        [self.gameView addGestureRecognizer:self.pan];
     }];
     [menuView addMenuItemWithTitle:@"Oops" andIcon:[UIImage imageNamed:@"oops.png"] andSelectedBlock:^{
         [self.cubeDown setFireDate:[NSDate date]];
-        [self.view addGestureRecognizer:self.tap];
-        [self.view addGestureRecognizer:self.pan];
+        [self.gameView addGestureRecognizer:self.tap];
+        [self.gameView addGestureRecognizer:self.pan];
     }];
     [menuView addMenuItemWithTitle:@"延迟" andIcon:[UIImage imageNamed:@"delay.png"] andSelectedBlock:^{
 
         [self.cubeDown setFireDate:[NSDate date]];
-        [self.view addGestureRecognizer:self.tap];
-        [self.view addGestureRecognizer:self.pan];
+        [self.gameView addGestureRecognizer:self.tap];
+        [self.gameView addGestureRecognizer:self.pan];
     }];
     [menuView addMenuItemWithTitle:@"执行" andIcon:[UIImage imageNamed:@"exe.png"] andSelectedBlock:^{
         [self.cubeDown setFireDate:[NSDate date]];
-        [self.view addGestureRecognizer:self.tap];
-        [self.view addGestureRecognizer:self.pan];
+        [self.gameView addGestureRecognizer:self.tap];
+        [self.gameView addGestureRecognizer:self.pan];
     }];
     [menuView addMenuItemWithTitle:@"未知" andIcon:[UIImage imageNamed:@"xcode.png"] andSelectedBlock:^{
         [self.cubeDown setFireDate:[NSDate date]];
-        [self.view addGestureRecognizer:self.tap];
-        [self.view addGestureRecognizer:self.pan];
+        [self.gameView addGestureRecognizer:self.tap];
+        [self.gameView addGestureRecognizer:self.pan];
     }];
     
     [menuView show];
@@ -587,7 +669,6 @@
     }
     self.currentCube = nil;
     self.nextCube = [self getNextCube:CUBE_TYPE_NUMBER];
-    self.currentCube = [self getCurrentCube];
     self.crashed = YES;
     //继续游戏
     //如果存在则销毁定时器
@@ -597,21 +678,4 @@
     self.cubeDown = [NSTimer scheduledTimerWithTimeInterval:self.currentCube.speed target:self selector:@selector(goDown) userInfo:nil repeats:NO];
 }
 
-- (void)whosyourdaddy {
-    [self.cubeDown setFireDate:[NSDate distantFuture]];
-    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"确定开挂？" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *actionSure = [UIAlertAction actionWithTitle:@"确定"
-                                                         style:UIAlertActionStyleDestructive
-                                                       handler:^(UIAlertAction * _Nonnull action) {
-                                                           [self.cubeDown setFireDate:[NSDate date]];
-                                                       }];
-    UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"取消"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                             [self.cubeDown setFireDate:[NSDate date]];
-                                                         }];
-    [alertController addAction:actionSure];
-    [alertController addAction:actionCancel];
-    [self presentViewController:alertController animated:YES completion:nil];
-}
 @end

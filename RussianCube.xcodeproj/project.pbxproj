@@ -15,6 +15,8 @@
 		201276581C151CB50089D95D /* oops@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201276501C151CB50089D95D /* oops@2x.png */; };
 		201276591C151CB50089D95D /* xcode.png in Resources */ = {isa = PBXBuildFile; fileRef = 201276511C151CB50089D95D /* xcode.png */; };
 		2012765A1C151CB50089D95D /* xcode@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201276521C151CB50089D95D /* xcode@2x.png */; };
+		2012765C1C1523840089D95D /* gameMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 2012765B1C1523840089D95D /* gameMenu.png */; };
+		2012765F1C1534EE0089D95D /* GameMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012765E1C1534EE0089D95D /* GameMenuTableViewController.m */; };
 		2061780D1C0FBC220037CA13 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2061780C1C0FBC220037CA13 /* main.m */; };
 		206178101C0FBC220037CA13 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2061780F1C0FBC220037CA13 /* AppDelegate.m */; };
 		206178131C0FBC220037CA13 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206178121C0FBC220037CA13 /* ViewController.m */; };
@@ -67,6 +69,9 @@
 		201276501C151CB50089D95D /* oops@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "oops@2x.png"; path = "RussianCube/images/TumblrMenu/oops@2x.png"; sourceTree = "<group>"; };
 		201276511C151CB50089D95D /* xcode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = xcode.png; path = RussianCube/images/TumblrMenu/xcode.png; sourceTree = "<group>"; };
 		201276521C151CB50089D95D /* xcode@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "xcode@2x.png"; path = "RussianCube/images/TumblrMenu/xcode@2x.png"; sourceTree = "<group>"; };
+		2012765B1C1523840089D95D /* gameMenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gameMenu.png; path = RussianCube/images/TumblrMenu/gameMenu.png; sourceTree = "<group>"; };
+		2012765D1C1534EE0089D95D /* GameMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameMenuTableViewController.h; sourceTree = "<group>"; };
+		2012765E1C1534EE0089D95D /* GameMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameMenuTableViewController.m; sourceTree = "<group>"; };
 		206178081C0FBC220037CA13 /* RussianCube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RussianCube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2061780C1C0FBC220037CA13 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2061780E1C0FBC220037CA13 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -166,6 +171,8 @@
 				206178191C0FBC220037CA13 /* LaunchScreen.storyboard */,
 				2061781C1C0FBC220037CA13 /* Info.plist */,
 				2061780B1C0FBC220037CA13 /* Supporting Files */,
+				2012765D1C1534EE0089D95D /* GameMenuTableViewController.h */,
+				2012765E1C1534EE0089D95D /* GameMenuTableViewController.m */,
 			);
 			path = RussianCube;
 			sourceTree = "<group>";
@@ -190,6 +197,7 @@
 		2061783A1C0FDEFB0037CA13 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				2012765B1C1523840089D95D /* gameMenu.png */,
 				2012764B1C151CB50089D95D /* delay.png */,
 				2012764C1C151CB50089D95D /* delay@2x.png */,
 				2012764D1C151CB50089D95D /* exe.png */,
@@ -358,6 +366,7 @@
 				206178921C127C780037CA13 /* cubeCell.png in Resources */,
 				206178C41C145A0A0037CA13 /* clear@2x.png in Resources */,
 				206178161C0FBC220037CA13 /* Main.storyboard in Resources */,
+				2012765C1C1523840089D95D /* gameMenu.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +394,7 @@
 				206178501C101FCF0037CA13 /* CubeB.m in Sources */,
 				206178561C101FFE0037CA13 /* CubeD.m in Sources */,
 				206178101C0FBC220037CA13 /* AppDelegate.m in Sources */,
+				2012765F1C1534EE0089D95D /* GameMenuTableViewController.m in Sources */,
 				206178831C127AF10037CA13 /* CHTumblrMenuView.m in Sources */,
 				2061780D1C0FBC220037CA13 /* main.m in Sources */,
 			);
