@@ -544,31 +544,28 @@
         [self.view addGestureRecognizer:self.tap];
         [self.view addGestureRecognizer:self.pan];
     }];
-    [menuView addMenuItemWithTitle:@"CLEAR!" andIcon:[UIImage imageNamed:@"clear.png"] andSelectedBlock:^{
+    [menuView addMenuItemWithTitle:@"清除" andIcon:[UIImage imageNamed:@"clear.png"] andSelectedBlock:^{
         [self clearCubeBox];
         [self.view addGestureRecognizer:self.tap];
         [self.view addGestureRecognizer:self.pan];
     }];
-    [menuView addMenuItemWithTitle:@"Quote" andIcon:[UIImage imageNamed:@"post_type_bubble_quote.png"] andSelectedBlock:^{
-        NSLog(@"Quote selected");
+    [menuView addMenuItemWithTitle:@"Oops" andIcon:[UIImage imageNamed:@"oops.png"] andSelectedBlock:^{
         [self.cubeDown setFireDate:[NSDate date]];
         [self.view addGestureRecognizer:self.tap];
         [self.view addGestureRecognizer:self.pan];
     }];
-    [menuView addMenuItemWithTitle:@"Link" andIcon:[UIImage imageNamed:@"post_type_bubble_link.png"] andSelectedBlock:^{
-        NSLog(@"Link selected");
+    [menuView addMenuItemWithTitle:@"延迟" andIcon:[UIImage imageNamed:@"delay.png"] andSelectedBlock:^{
+
         [self.cubeDown setFireDate:[NSDate date]];
         [self.view addGestureRecognizer:self.tap];
         [self.view addGestureRecognizer:self.pan];
     }];
-    [menuView addMenuItemWithTitle:@"Chat" andIcon:[UIImage imageNamed:@"post_type_bubble_chat.png"] andSelectedBlock:^{
-        NSLog(@"Chat selected");
+    [menuView addMenuItemWithTitle:@"执行" andIcon:[UIImage imageNamed:@"exe.png"] andSelectedBlock:^{
         [self.cubeDown setFireDate:[NSDate date]];
         [self.view addGestureRecognizer:self.tap];
         [self.view addGestureRecognizer:self.pan];
     }];
-    [menuView addMenuItemWithTitle:@"Video" andIcon:[UIImage imageNamed:@"post_type_bubble_video.png"] andSelectedBlock:^{
-        NSLog(@"Video selected");
+    [menuView addMenuItemWithTitle:@"未知" andIcon:[UIImage imageNamed:@"xcode.png"] andSelectedBlock:^{
         [self.cubeDown setFireDate:[NSDate date]];
         [self.view addGestureRecognizer:self.tap];
         [self.view addGestureRecognizer:self.pan];
