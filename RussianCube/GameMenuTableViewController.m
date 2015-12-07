@@ -100,8 +100,10 @@
             [self.rootViewController pauseGameForMenu];
             break;
         case 2:
+            [self.rootViewController showRecordForMenu];
             break;
         case 3:
+            [self.rootViewController showAchieveForMenu];
             break;
         default:
             break;

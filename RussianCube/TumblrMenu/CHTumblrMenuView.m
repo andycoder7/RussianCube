@@ -24,6 +24,7 @@
 //  THE SOFTWARE.
 
 #import "CHTumblrMenuView.h"
+#import "ViewController.h"
 #define CHTumblrMenuViewTag 1999
 #define CHTumblrMenuViewImageHeight 60
 #define CHTumblrMenuViewTitleHeight 20
@@ -33,6 +34,8 @@
 #define CHTumblrMenuViewDismissAnimationID @"CHTumblrMenuViewDismissAnimationID"
 #define CHTumblrMenuViewAnimationTime 0.36
 #define CHTumblrMenuViewAnimationInterval (CHTumblrMenuViewAnimationTime / 5)
+
+#define CODE_LABEL_HEIGHT 80
 
 
 @interface CHTumblrMenuItemButton : UIControl
@@ -77,6 +80,7 @@
 {
     UIImageView *backgroundView_;
     NSMutableArray *buttons_;
+    UILabel* codeView_;
 }
 
 
@@ -86,17 +90,16 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss:)];
-        ges.delegate = self;
-        [self addGestureRecognizer:ges];
+//        UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss:)];
+//        ges.delegate = self;
+//        [self addGestureRecognizer:ges];
         self.backgroundColor = [UIColor clearColor];
         backgroundView_ = [[UIImageView alloc] initWithFrame:self.bounds];
         backgroundView_.image = [[UIImage imageNamed:@"modal_background.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:6];
         backgroundView_.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [self addSubview:backgroundView_];
         buttons_ = [[NSMutableArray alloc] initWithCapacity:6];
-        
-        
+
     }
     return self;
 }
@@ -128,7 +131,7 @@
     
     offsetY += (CHTumblrMenuViewImageHeight + CHTumblrMenuViewTitleHeight + CHTumblrMenuViewVerticalPadding) * rowIndex;
 
-    
+   
     return CGRectMake(offsetX, offsetY, CHTumblrMenuViewImageHeight, (CHTumblrMenuViewImageHeight+CHTumblrMenuViewTitleHeight));
 
 }
@@ -141,6 +144,15 @@
         CHTumblrMenuItemButton *button = buttons_[i];
         button.frame = [self frameForButtonAtIndex:i];
     }
+    
+    CGFloat itemHeight = (CHTumblrMenuViewImageHeight + CHTumblrMenuViewTitleHeight) * 2 + CHTumblrMenuViewHorizontalMargin;
+    CGFloat offsetY = (self.bounds.size.height - itemHeight) / 2.0;
+    
+    codeView_ = [[UILabel alloc] initWithFrame:CGRectMake(0, offsetY-CODE_LABEL_HEIGHT, self.bounds.size.width, CODE_LABEL_HEIGHT)];
+    [codeView_ setTextColor:[UIColor whiteColor]];
+    [codeView_ setTextAlignment:NSTextAlignmentCenter];
+    [codeView_ setFont:[UIFont boldSystemFontOfSize:20]];
+    [self addSubview:codeView_];
     
 }
 
@@ -173,13 +185,18 @@
 
 - (void)buttonTapped:(CHTumblrMenuItemButton*)btn
 {
-    [self dismiss:nil];
-    double delayInSeconds = CHTumblrMenuViewAnimationTime  + CHTumblrMenuViewAnimationInterval * (buttons_.count + 1);
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        btn.selectedBlock();
-
-    });
+    btn.selectedBlock();
+    
+//        double delayInSeconds = CHTumblrMenuViewAnimationTime  + CHTumblrMenuViewAnimationInterval * (buttons_.count + 1);
+//        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//            btn.selectedBlock();
+//        });
+    [codeView_ setText:[ViewController getCodeString]];
+    if ([ViewController ifDismissBugView]) {
+        //移除页面
+        [self dismiss:nil];
+    }
 }
 
 

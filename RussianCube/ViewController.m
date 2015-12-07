@@ -63,8 +63,16 @@
 @property (nonatomic,strong)UIView *gameView;
 //暂停
 @property (nonatomic,strong)UIView *pauseView;
+//记录
+@property (nonatomic,strong)UIView *recordView;
+//成就
+@property (nonatomic,strong)UIView *achieveView;
+//菜单中tableView的控制类
 @property (nonatomic,strong)GameMenuTableViewController *gameMenuTVC;
+
 @end
+
+static NSMutableString *DismissFlag = nil;
 
 @implementation ViewController
 
@@ -73,6 +81,7 @@
     //=====初始化属性======
     self.gameLevel = 1;
     self.gameScore = 0;
+    DismissFlag = 0;
     //初始化游戏等分记录归档的位置
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     self.recordPath = [documentPath stringByAppendingPathComponent:@"data.archiver"];
@@ -236,6 +245,13 @@
     [self clearCubeBox];
 }
 
+- (void)pauseGame {
+    //暂停游戏
+    [self.cubeDown setFireDate:[NSDate distantFuture]];
+    [self.gameView removeGestureRecognizer:self.tap];
+    [self.gameView removeGestureRecognizer:self.pan];
+}
+
 #pragma mark -- 菜单功能的相关函数
 
 - (void)restartGameForMenu {
@@ -245,21 +261,26 @@
 
 - (void)pauseGameForMenu {
     [self closeGameMenu];
-    //暂停游戏
-    [self.cubeDown setFireDate:[NSDate distantFuture]];
-    [self.gameView removeGestureRecognizer:self.tap];
-    [self.gameView removeGestureRecognizer:self.pan];
-    //
+    [self pauseGame];
+    //显示暂停页面
     self.pauseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     self.pauseView.backgroundColor = [UIColor blackColor];
     self.pauseView.alpha = 0.3;
     [self.view addSubview:self.pauseView];
+    //添加继续按钮
     UIButton *continueGameButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-100)/2, (self.view.frame.size.height-100)/2, 100, 100)];
     [continueGameButton setTitle:@"Continue" forState:UIControlStateNormal];
     [continueGameButton addTarget:self action:@selector(continueGame) forControlEvents:UIControlEventTouchUpInside];
     [self.pauseView addSubview:continueGameButton];
 }
 
+- (void)showRecordForMenu {
+    // TODO
+}
+
+- (void)showAchieveForMenu {
+    // TODO
+}
 
 # pragma mark --各种selector中的回调函数
 
@@ -305,9 +326,7 @@
         return;
     }
     //暂停游戏先~
-    [self.cubeDown setFireDate:[NSDate distantFuture]];
-    [self.gameView removeGestureRecognizer:self.tap];
-    [self.gameView removeGestureRecognizer:self.pan];
+    [self pauseGame];
     
     //创建游戏菜单view
     self.gameMenuView = [[UIView alloc] initWithFrame:CGRectMake(1, 68, 150, 200)]; // 200=20+45x4 150=30+120
@@ -612,45 +631,102 @@
 // 以下是挂逼相关的代码
 # pragma mark --whosyourdaddy
 
++ (BOOL)ifDismissBugView {
+
+    if ([DismissFlag isEqualToString:@"执行 召唤神龙"] || [DismissFlag isEqualToString:@"执行 清除计划"] ||
+        [DismissFlag isEqualToString:@"Oops"] || [DismissFlag isEqualToString:@"执行 延迟魔法"] ||
+        [DismissFlag isEqualToString:@"执行 Xcode"]) {
+        
+        return YES;
+    }else if (![DismissFlag isEqualToString:@"执行"] &&![DismissFlag isEqualToString:@"执行 X"] &&
+              ![DismissFlag isEqualToString:@"执行 Xc"] && ![DismissFlag isEqualToString:@"执行 Xco"] &&
+              ![DismissFlag isEqualToString:@"执行 Xcod"]) {
+        [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
+    }
+    return NO;
+}
+
++ (NSString *)getCodeString {
+    return DismissFlag;
+}
 - (void)whosyourdaddy{
+    //如果菜单开着的话关了它
     [self closeGameMenu];
     //暂停游戏先~
-    [self.cubeDown setFireDate:[NSDate distantFuture]];
-    [self.gameView removeGestureRecognizer:self.tap];
-    [self.gameView removeGestureRecognizer:self.pan];
+    [self pauseGame];
+    
+    if (DismissFlag == nil) {
+        DismissFlag = [[NSMutableString alloc]init];
+    }else  {
+        [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
+    }
     
     CHTumblrMenuView *menuView = [[CHTumblrMenuView alloc] init];
     [menuView addMenuItemWithTitle:@"召唤" andIcon:[UIImage imageNamed:@"callDragon.png"] andSelectedBlock:^{
-        self.nextCube = [self getNextCube:3];
-        [self.cubeDown setFireDate:[NSDate date]];
-        [self.gameView addGestureRecognizer:self.tap];
-        [self.gameView addGestureRecognizer:self.pan];
+        [DismissFlag appendString:@" 召唤神龙"];
+        if ([ViewController ifDismissBugView]) {
+            self.nextCube = [self getNextCube:3];
+            [self.cubeDown setFireDate:[NSDate date]];
+            [self.gameView addGestureRecognizer:self.tap];
+            [self.gameView addGestureRecognizer:self.pan];
+        }
     }];
     [menuView addMenuItemWithTitle:@"清除" andIcon:[UIImage imageNamed:@"clear.png"] andSelectedBlock:^{
-        [self clearCubeBox];
-        [self.gameView addGestureRecognizer:self.tap];
-        [self.gameView addGestureRecognizer:self.pan];
+        if ([DismissFlag isEqualToString:@"执行 X"]) {
+            [DismissFlag appendString:@"c"];
+        }else {
+            [DismissFlag appendString:@" 清除计划"];
+        }
+        if ([ViewController ifDismissBugView]) {
+            [self clearCubeBox];
+            [self.gameView addGestureRecognizer:self.tap];
+            [self.gameView addGestureRecognizer:self.pan];
+        }
     }];
     [menuView addMenuItemWithTitle:@"Oops" andIcon:[UIImage imageNamed:@"oops.png"] andSelectedBlock:^{
-        [self.cubeDown setFireDate:[NSDate date]];
-        [self.gameView addGestureRecognizer:self.tap];
-        [self.gameView addGestureRecognizer:self.pan];
+        if ([DismissFlag isEqualToString:@"执行 Xc"]) {
+            [DismissFlag appendString:@"o"];
+        }else if ([DismissFlag isEqualToString:@"执行"]) {
+            [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
+            [DismissFlag appendString:@"Oops"];
+        }else {
+            [DismissFlag appendString:@"Oops"];
+        }
+        
+        if ([ViewController ifDismissBugView]) {
+            [self.cubeDown setFireDate:[NSDate date]];
+            [self.gameView addGestureRecognizer:self.tap];
+            [self.gameView addGestureRecognizer:self.pan];
+        }
     }];
     [menuView addMenuItemWithTitle:@"延迟" andIcon:[UIImage imageNamed:@"delay.png"] andSelectedBlock:^{
+        if ([DismissFlag isEqualToString:@"执行 Xco"]) {
+            [DismissFlag appendString:@"d"];
+        }else {
+            [DismissFlag appendString:@" 延迟魔法"];
+        }
 
-        [self.cubeDown setFireDate:[NSDate date]];
-        [self.gameView addGestureRecognizer:self.tap];
-        [self.gameView addGestureRecognizer:self.pan];
+        if ([ViewController ifDismissBugView]) {
+            [self.cubeDown setFireDate:[NSDate date]];
+            [self.gameView addGestureRecognizer:self.tap];
+            [self.gameView addGestureRecognizer:self.pan];
+        }
     }];
     [menuView addMenuItemWithTitle:@"执行" andIcon:[UIImage imageNamed:@"exe.png"] andSelectedBlock:^{
-        [self.cubeDown setFireDate:[NSDate date]];
-        [self.gameView addGestureRecognizer:self.tap];
-        [self.gameView addGestureRecognizer:self.pan];
+        if ([DismissFlag isEqualToString:@"执行 Xcod"]) {
+            [DismissFlag appendString:@"e"];
+            return;
+        }else {
+            [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
+        }
+        [DismissFlag appendString:@"执行"];
     }];
     [menuView addMenuItemWithTitle:@"未知" andIcon:[UIImage imageNamed:@"xcode.png"] andSelectedBlock:^{
-        [self.cubeDown setFireDate:[NSDate date]];
-        [self.gameView addGestureRecognizer:self.tap];
-        [self.gameView addGestureRecognizer:self.pan];
+        if ([DismissFlag isEqualToString:@"执行"]) {
+            [DismissFlag appendString:@" X"];
+        }else {
+            [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
+        }
     }];
     
     [menuView show];

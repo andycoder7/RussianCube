@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController 
 
 - (void)pauseGameForMenu;
 - (void)restartGameForMenu;
+- (void)showRecordForMenu;
+- (void)showAchieveForMenu;
++ (BOOL)ifDismissBugView;
++ (NSString *)getCodeString;
 
 @end
 
