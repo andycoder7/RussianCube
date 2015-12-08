@@ -14,6 +14,8 @@
 - (void)restartGameForMenu;
 - (void)showRecordForMenu;
 - (void)showAchieveForMenu;
+- (void)exitGameForMenu;
+
 + (BOOL)ifDismissBugView;
 + (NSString *)getCodeString;
 

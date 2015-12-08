@@ -19,10 +19,11 @@
 
 - (NSArray *)menu {
     if (_menu == nil) {
-        _menu= @[@[@"干！再来！"],
-                 @[@"暂停"],
-                 @[@"记录"],
-                 @[@"成就"]
+        _menu= @[@[@"重新开始"],
+                 @[@"暂停游戏"],
+                 @[@"查看记录"],
+                 @[@"查看成就"],
+                 @[@"退出游戏"]
                  ];
     }
     return _menu;
@@ -32,7 +33,8 @@
         _menuImage = @[@[@"menu_restart.png"],
                        @[@"menu_pause.png"],
                        @[@"menu_record.png"],
-                       @[@"menu_achieve.png"]
+                       @[@"menu_achieve.png"],
+                       @[@"menu_exit.png"]
                        ];
     }
     return _menuImage;
@@ -104,6 +106,9 @@
             break;
         case 3:
             [self.rootViewController showAchieveForMenu];
+            break;
+        case 4:
+            [self.rootViewController exitGameForMenu];
             break;
         default:
             break;

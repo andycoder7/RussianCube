@@ -29,6 +29,8 @@
 @property (nonatomic)long gameScore;
 //游戏得分记录
 @property (nonatomic)long gameScoreRecord;
+//游戏进行的次数
+@property (nonatomic)long gameCountNum;
 //显示游戏难度的label
 @property (nonatomic,strong)UILabel *gameLevelLabelValue;
 //显示游戏得分的label
@@ -63,6 +65,8 @@
 @property (nonatomic,strong)UIView *gameView;
 //暂停
 @property (nonatomic,strong)UIView *pauseView;
+//第一次游戏时需显示的教程页面
+@property (nonatomic,strong)UIView *guideView;
 //记录
 @property (nonatomic,strong)UIView *recordView;
 //成就
@@ -118,6 +122,13 @@ static NSMutableString *DismissFlag = nil;
     self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rotateCube)];
     [self.gameView addGestureRecognizer:self.tap];
     
+    self.gameCountNum = [self loadGameCountNum];
+    if (self.gameCountNum == 0) {
+        [self showGuideView];
+    }
+    self.gameCountNum++;
+    [self saveGameData];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -183,6 +194,19 @@ static NSMutableString *DismissFlag = nil;
     [self.gameView addSubview:whosyourdaddy];
 }
 
+- (void)showGuideView {
+    [self pauseGame];
+    //显示暂停页面
+    self.guideView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    self.guideView.backgroundColor = [UIColor blackColor];
+    self.guideView.alpha = 0.3;
+    [self.view addSubview:self.guideView];
+    //添加继续按钮
+    UIButton *closeGuideViewButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-100)/2, (self.view.frame.size.height-100)/2, 100, 100)];
+    [closeGuideViewButton setTitle:@"GUIDE" forState:UIControlStateNormal];
+    [closeGuideViewButton addTarget:self action:@selector(closeGuideView) forControlEvents:UIControlEventTouchUpInside];
+    [self.guideView addSubview:closeGuideViewButton];
+}
 
 //检查是否有行满足消去的条件，并改变得分和难度
 - (void)checkScore {
@@ -214,7 +238,7 @@ static NSMutableString *DismissFlag = nil;
             //更新内存中的值
             self.gameScoreRecord = self.gameScore;
             //更新本地的值
-            [self saveGameRecord:self.gameScoreRecord];
+            [self saveGameData];
             //更新label中的值
             [self.gameScoreRecordLabelValue setText:[NSString stringWithFormat:@"%ld",self.gameScoreRecord]];
         }
@@ -222,30 +246,33 @@ static NSMutableString *DismissFlag = nil;
 }
 
 - (void)died {
-    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"呵呵哒 挂了吧 😄" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *actionSure = [UIAlertAction actionWithTitle:@"嗯，我挂了 😭"
-                                                         style:UIAlertActionStyleDestructive
-                                                       handler:^(UIAlertAction * _Nonnull action) {
-                                                           
-                                                       }];
-    UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"我怎么可能死 😡"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                             [self restartGame];
-                                                         }];
-    [alertController addAction:actionSure];
-    [alertController addAction:actionCancel];
-    [self presentViewController:alertController animated:YES completion:nil];
+    [self showAlertMessage:@"施主 走好 不送 再来否？" ifYes:^{[self restartGame];} ifNO:^{[self quitGame];}];
 }
 
 - (void)restartGame {
+    self.gameCountNum++;
+    [self saveGameData];
     //重置级别和分数
-    self.gameLevel = 1;
-    [self.gameLevelLabelValue setText:[NSString stringWithFormat:@"%d", self.gameLevel]];
-    self.gameScore = 0;
-    [self.gameScoreLabelValue setText:[NSString stringWithFormat:@"%ld",self.gameScore]];
+    [self resetGameLevelAndScore:0];
+    self.delayCount = 0;
     
     [self clearCubeBox];
+}
+
+- (void)resetGameLevelAndScore:(long)score {
+    if (score < 0) {
+        score = 0;
+    }
+    self.gameScore = score;
+    [self.gameScoreLabelValue setText:[NSString stringWithFormat:@"%ld",self.gameScore]];
+    self.gameLevel = (int)(self.gameScore/1000+1);
+    [self.gameLevelLabelValue setText:[NSString stringWithFormat:@"%d", self.gameLevel]];
+}
+
+- (void) quitGame {
+    //通过程序异常结束程序
+    NSMutableArray *temp = [[NSMutableArray alloc] initWithCapacity:10];
+    [temp addObject:nil];
 }
 
 - (void)pauseGame {
@@ -253,6 +280,13 @@ static NSMutableString *DismissFlag = nil;
     [self.cubeDown setFireDate:[NSDate distantFuture]];
     [self.gameView removeGestureRecognizer:self.tap];
     [self.gameView removeGestureRecognizer:self.pan];
+}
+
+- (void)continueGame {
+    //继续游戏
+    [self.cubeDown setFireDate:[NSDate date]];
+    [self.gameView addGestureRecognizer:self.tap];
+    [self.gameView addGestureRecognizer:self.pan];
 }
 
 #pragma mark -- 菜单功能的相关函数
@@ -271,10 +305,10 @@ static NSMutableString *DismissFlag = nil;
     self.pauseView.alpha = 0.3;
     [self.view addSubview:self.pauseView];
     //添加继续按钮
-    UIButton *continueGameButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-100)/2, (self.view.frame.size.height-100)/2, 100, 100)];
-    [continueGameButton setTitle:@"Continue" forState:UIControlStateNormal];
-    [continueGameButton addTarget:self action:@selector(continueGame) forControlEvents:UIControlEventTouchUpInside];
-    [self.pauseView addSubview:continueGameButton];
+    UIButton *closePauseViewButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-100)/2, (self.view.frame.size.height-100)/2, 100, 100)];
+    [closePauseViewButton setTitle:@"Continue" forState:UIControlStateNormal];
+    [closePauseViewButton addTarget:self action:@selector(closePauseView) forControlEvents:UIControlEventTouchUpInside];
+    [self.pauseView addSubview:closePauseViewButton];
 }
 
 - (void)showRecordForMenu {
@@ -284,7 +318,9 @@ static NSMutableString *DismissFlag = nil;
 - (void)showAchieveForMenu {
     // TODO
 }
-
+- (void)exitGameForMenu {
+    [self showAlertMessage:@"确认退出程序？" ifYes:^{[self quitGame];} ifNO:^{[self closeGameMenu];}];
+}
 # pragma mark --各种selector中的回调函数
 
 //掉方块，如果crash了，就新建一个方块
@@ -332,10 +368,10 @@ static NSMutableString *DismissFlag = nil;
     [self pauseGame];
     
     //创建游戏菜单view
-    self.gameMenuView = [[UIView alloc] initWithFrame:CGRectMake(1, 68, 150, 200)]; // 200=20+45x4 150=30+120
+    self.gameMenuView = [[UIView alloc] initWithFrame:CGRectMake(1, 68, 150, 245)]; // 200=20+45x5 150=30+120
     [self.gameMenuView setBackgroundColor:[UIColor grayColor]];
     //创建菜单view中的tableview
-    self.gameMenuTVC.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, 150, 180)];
+    self.gameMenuTVC.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, 150, 225)];
     //关闭回弹效果
     [self.gameMenuTVC.tableView setBounces:NO];
     self.gameMenuTVC.tableView.delegate = self.gameMenuTVC;
@@ -359,15 +395,23 @@ static NSMutableString *DismissFlag = nil;
     [self continueGame];
 }
 
-- (void)continueGame {
+//暂停页面后回调这个函数继续游戏
+- (void)closePauseView {
     if (self.pauseView != nil) {
         [self.pauseView removeFromSuperview];
         self.pauseView = nil;
     }
-    [self.cubeDown setFireDate:[NSDate date]];
-    [self.gameView addGestureRecognizer:self.tap];
-    [self.gameView addGestureRecognizer:self.pan];
+    [self continueGame];
 }
+
+- (void)closeGuideView {
+    if (self.guideView != nil) {
+        [self.guideView removeFromSuperview];
+        self.guideView = nil;
+    }
+    [self continueGame];
+}
+
 # pragma mark --为其他方法服务的函数
 
 //初始化其速度和位置
@@ -512,8 +556,9 @@ static NSMutableString *DismissFlag = nil;
         [self horizontalMove:(int)(deltaPoint.x)];
         [sender setTranslation:CGPointZero inView:self.gameView];
     }
-    if (deltaPoint.y > 50) {
-        [self downToBottom];
+    if (deltaPoint.y > 15) {
+//        [self downToBottom];
+        [self verticalMove];
         [sender setTranslation:CGPointZero inView:self.gameView];
     }
 }
@@ -577,6 +622,18 @@ static NSMutableString *DismissFlag = nil;
     [self setCenterForCube:self.currentCube];
 }
 
+- (void)verticalMove {
+    [self.theLock lock];
+    if ([self isDownCrashed] == NO) {
+        [self removeCrashFlagOfCube];
+        for (int i = (int)([self.currentCube.subCubes count]-1); i >= 0; i--) {
+            [self.currentCube.subCubes replaceObjectAtIndex:i withObject:@([self.currentCube.subCubes[i] integerValue]+10)];
+        }
+        [self addCrashFlagOfCube];
+    }
+    [self.theLock unlock];
+    [self setCenterForCube:self.currentCube];
+}
 
 # pragma mark --get/set recodeData
 
@@ -588,14 +645,22 @@ static NSMutableString *DismissFlag = nil;
     return [unachiver decodeInt64ForKey:@"GameScoreRecord"];
 }
 
-- (BOOL)saveGameRecord:(long)record {
+- (BOOL)saveGameData {
     NSMutableData *recordArchiverData = [NSMutableData data];
     NSKeyedArchiver *recordArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:recordArchiverData];
-    [recordArchiver encodeInt64:record forKey:@"GameScoreRecord"];
+    [recordArchiver encodeInt64:self.gameScoreRecord forKey:@"GameScoreRecord"];
+    [recordArchiver encodeInt64:self.gameCountNum forKey:@"GameCountNum"];
     [recordArchiver finishEncoding];
     return [recordArchiverData writeToFile:self.recordPath atomically:YES];
 }
 
+- (long)loadGameCountNum {
+    //1. 从磁盘读取文件，生成NSData实例
+    NSData *unarchiverData = [NSData dataWithContentsOfFile:self.recordPath];
+    //2. 根据Data实例创建和初始化解归档对象
+    NSKeyedUnarchiver *unachiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:unarchiverData];
+    return [unachiver decodeInt64ForKey:@"GameCountNum"];
+}
 
 # pragma mark --碰撞判定
 
@@ -661,16 +726,8 @@ static NSMutableString *DismissFlag = nil;
 # pragma mark --whosyourdaddy
 
 + (BOOL)ifDismissBugView {
-
-    if ([DismissFlag isEqualToString:@"执行 召唤神龙"] || [DismissFlag isEqualToString:@"执行 清除计划"] ||
-        [DismissFlag isEqualToString:@"Oops"] || [DismissFlag isEqualToString:@"执行 延迟魔法"] ||
-        [DismissFlag isEqualToString:@"执行 Xcode"] || [DismissFlag isEqualToString:@"你到底还要不要开挂？！不陪你玩了 =.="] ) {
-        
+    if ([DismissFlag isEqualToString:@""] || [DismissFlag isEqualToString:@"Oops! Good luck!"]) {
         return YES;
-    }else if (![DismissFlag isEqualToString:@"执行"] &&![DismissFlag isEqualToString:@"执行 X"] &&
-              ![DismissFlag isEqualToString:@"执行 Xc"] && ![DismissFlag isEqualToString:@"执行 Xco"] &&
-              ![DismissFlag isEqualToString:@"执行 Xcod"] && ![DismissFlag isEqualToString:@"不执行"]) {
-        [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
     }
     return NO;
 }
@@ -692,85 +749,70 @@ static NSMutableString *DismissFlag = nil;
     
     CHTumblrMenuView *menuView = [[CHTumblrMenuView alloc] init];
     [menuView addMenuItemWithTitle:@"召唤" andIcon:[UIImage imageNamed:@"callDragon.png"] andSelectedBlock:^{
-        [DismissFlag appendString:@" 召唤神龙"];
-        if ([ViewController ifDismissBugView]) {
-            self.nextCube = [self getNextCube:3];
-            [self passCurrentCube];
-            [self.cubeDown setFireDate:[NSDate date]];
-            [self.gameView addGestureRecognizer:self.tap];
-            [self.gameView addGestureRecognizer:self.pan];
+        [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
+        if (self.gameScore < 500) {
+            [DismissFlag appendString:@"您的积分低于500，不足以召唤神龙"];
+        } else {
+            [self showAlertMessage:@"【召唤神龙】需要500积分，请再次点击以确认召唤" ifYes:^{
+                if (self.gameScore >= 500) {
+                    self.gameScore -= 500;
+                    [self resetGameLevelAndScore:self.gameScore];
+                    self.nextCube = [self getNextCube:3];
+                    [self passCurrentCube];
+                }
+                [self continueGame];
+            } ifNO:^{[self continueGame];}];
         }
     }];
     [menuView addMenuItemWithTitle:@"清除" andIcon:[UIImage imageNamed:@"clear.png"] andSelectedBlock:^{
-        if ([DismissFlag isEqualToString:@"执行 X"]) {
-            [DismissFlag appendString:@"c"];
-        }else {
-            [DismissFlag appendString:@" 清除计划"];
-        }
-        if ([ViewController ifDismissBugView]) {
-            [self clearCubeBox];
-            [self.gameView addGestureRecognizer:self.tap];
-            [self.gameView addGestureRecognizer:self.pan];
+        [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
+        if (self.gameScore < 2000) {
+            [DismissFlag appendString:@"您的积分低于2000，不足以执行清除计划"];
+        } else {
+            [self showAlertMessage:@"【清除计划】需要2000积分，请再次点击以确认执行" ifYes:^{
+                if (self.gameScore >= 2000) {
+                    self.gameScore -= 2000;
+                    [self resetGameLevelAndScore:self.gameScore];
+                    [self clearCubeBox];
+                    [self.gameView addGestureRecognizer:self.tap];
+                    [self.gameView addGestureRecognizer:self.pan];
+                }
+            } ifNO:^{[self continueGame];}];
         }
     }];
     [menuView addMenuItemWithTitle:@"Oops" andIcon:[UIImage imageNamed:@"oops.png"] andSelectedBlock:^{
-        if ([DismissFlag isEqualToString:@"执行 Xc"]) {
-            [DismissFlag appendString:@"o"];
-        }else if ([DismissFlag isEqualToString:@"执行"]) {
-            [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
-            [DismissFlag appendString:@"Oops"];
-        }else {
-            [DismissFlag appendString:@" Oops"];
-        }
-        
+        [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
+        [DismissFlag appendString:@"Oops! Good luck!"];
         if ([ViewController ifDismissBugView]) {
             //TODO
-            [self.cubeDown setFireDate:[NSDate date]];
-            [self.gameView addGestureRecognizer:self.tap];
-            [self.gameView addGestureRecognizer:self.pan];
+            [self continueGame];
         }
     }];
     [menuView addMenuItemWithTitle:@"延迟" andIcon:[UIImage imageNamed:@"delay.png"] andSelectedBlock:^{
-        if ([DismissFlag isEqualToString:@"执行 Xco"]) {
-            [DismissFlag appendString:@"d"];
-        }else {
-            [DismissFlag appendString:@" 延迟魔法"];
+        [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
+        if (self.gameScore < 1000) {
+            [DismissFlag appendString:@"您的积分低于1000，不足以施放延迟魔法"];
+        } else {
+            [self showAlertMessage:@"【延迟魔法】需要1000积分，请再次点击以确认施放" ifYes:^{
+                if (self.gameScore >= 1000) {
+                    self.gameScore -= 1000;
+                    [self resetGameLevelAndScore:self.gameScore];
+                    self.delayCount = 10;
+                    [self passCurrentCube];
+                    [self continueGame];
+                }
+            } ifNO:^{[self continueGame];}];
         }
-
-        if ([ViewController ifDismissBugView]) {
-            self.delayCount = 10;
-            [self passCurrentCube];
-            [self.cubeDown setFireDate:[NSDate date]];
-            [self.gameView addGestureRecognizer:self.tap];
-            [self.gameView addGestureRecognizer:self.pan];
-        }
+        
     }];
-    [menuView addMenuItemWithTitle:@"执行" andIcon:[UIImage imageNamed:@"exe.png"] andSelectedBlock:^{
-        if ([DismissFlag isEqualToString:@"执行 Xcod"]) {
-            [DismissFlag appendString:@"e"];
-            //TODO
-            return;
-        }else if ([DismissFlag isEqualToString:@"执行"]) {
-            [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
-            [DismissFlag appendString:@"不"];
-        }else if ([DismissFlag isEqualToString:@"不执行"]) {
-            [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
-            [DismissFlag appendString:@"你到底还要不要开挂？！不陪你玩了 =.="];
-            [self.cubeDown setFireDate:[NSDate date]];
-            [self.gameView addGestureRecognizer:self.tap];
-            [self.gameView addGestureRecognizer:self.pan];
-            return;
-        }else {
-            [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
-        }
-        [DismissFlag appendString:@"执行"];
+    [menuView addMenuItemWithTitle:@"返回" andIcon:[UIImage imageNamed:@"exit.png"] andSelectedBlock:^{
+        [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
+        [self continueGame];
     }];
     [menuView addMenuItemWithTitle:@"未知" andIcon:[UIImage imageNamed:@"xcode.png"] andSelectedBlock:^{
-        if ([DismissFlag isEqualToString:@"执行"]) {
-            [DismissFlag appendString:@" X"];
-        }else {
-            [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
-        }
+        [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
+        //TODO
+        [self continueGame];
     }];
     
     [menuView show];
@@ -796,6 +838,23 @@ static NSMutableString *DismissFlag = nil;
         [self.cubeDown invalidate];
     }
     self.cubeDown = [NSTimer scheduledTimerWithTimeInterval:self.currentCube.speed target:self selector:@selector(goDown) userInfo:nil repeats:NO];
+}
+
+- (void)showAlertMessage:(NSString *)msg ifYes:(void(^)(void))doYes ifNO:(void(^)(void))doNo {
+    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:msg message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *actionSure = [UIAlertAction actionWithTitle:@"确认"
+                                                         style:UIAlertActionStyleDestructive
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           doYes();
+                                                       }];
+    UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"取消"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             doNo();
+                                                         }];
+    [alertController addAction:actionSure];
+    [alertController addAction:actionCancel];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 @end

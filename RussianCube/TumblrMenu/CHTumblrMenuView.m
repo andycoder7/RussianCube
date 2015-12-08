@@ -80,7 +80,7 @@
 {
     UIImageView *backgroundView_;
     NSMutableArray *buttons_;
-    UILabel* codeView_;
+    UILabel* codeLabel_;
 }
 
 
@@ -148,12 +148,12 @@
     CGFloat itemHeight = (CHTumblrMenuViewImageHeight + CHTumblrMenuViewTitleHeight) * 2 + CHTumblrMenuViewHorizontalMargin;
     CGFloat offsetY = (self.bounds.size.height - itemHeight) / 2.0;
     
-    codeView_ = [[UILabel alloc] initWithFrame:CGRectMake(0, offsetY-CODE_LABEL_HEIGHT, self.bounds.size.width, CODE_LABEL_HEIGHT)];
-    [codeView_ setTextColor:[UIColor whiteColor]];
-    [codeView_ setTextAlignment:NSTextAlignmentCenter];
-    [codeView_ setFont:[UIFont boldSystemFontOfSize:20]];
-    [self addSubview:codeView_];
-    
+    codeLabel_ = [[UILabel alloc] initWithFrame:CGRectMake(0, offsetY-CODE_LABEL_HEIGHT, self.bounds.size.width, CODE_LABEL_HEIGHT)];
+    [codeLabel_ setTextColor:[UIColor whiteColor]];
+    [codeLabel_ setTextAlignment:NSTextAlignmentCenter];
+    [codeLabel_ setFont:[UIFont boldSystemFontOfSize:20]];
+    codeLabel_.adjustsFontSizeToFitWidth = YES;
+    [self addSubview:codeLabel_];
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
@@ -192,7 +192,7 @@
 //        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 //            btn.selectedBlock();
 //        });
-    [codeView_ setText:[ViewController getCodeString]];
+    [codeLabel_ setText:[ViewController getCodeString]];
     if ([ViewController ifDismissBugView]) {
         //移除页面
         [self dismiss:nil];
@@ -236,8 +236,6 @@
         positionAnimation.delegate = self;
         
         [button.layer addAnimation:positionAnimation forKey:@"riseAnimation"];
-
-
         
     }
 }

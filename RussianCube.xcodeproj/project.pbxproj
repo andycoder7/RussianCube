@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		201276531C151CB50089D95D /* delay.png in Resources */ = {isa = PBXBuildFile; fileRef = 2012764B1C151CB50089D95D /* delay.png */; };
 		201276541C151CB50089D95D /* delay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2012764C1C151CB50089D95D /* delay@2x.png */; };
-		201276551C151CB50089D95D /* exe.png in Resources */ = {isa = PBXBuildFile; fileRef = 2012764D1C151CB50089D95D /* exe.png */; };
-		201276561C151CB50089D95D /* exe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2012764E1C151CB50089D95D /* exe@2x.png */; };
 		201276571C151CB50089D95D /* oops.png in Resources */ = {isa = PBXBuildFile; fileRef = 2012764F1C151CB50089D95D /* oops.png */; };
 		201276581C151CB50089D95D /* oops@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201276501C151CB50089D95D /* oops@2x.png */; };
 		201276591C151CB50089D95D /* xcode.png in Resources */ = {isa = PBXBuildFile; fileRef = 201276511C151CB50089D95D /* xcode.png */; };
@@ -48,6 +46,8 @@
 		206178C01C14215F0037CA13 /* callDragon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178BE1C14215F0037CA13 /* callDragon@2x.png */; };
 		206178C31C145A0A0037CA13 /* clear.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178C11C145A0A0037CA13 /* clear.png */; };
 		206178C41C145A0A0037CA13 /* clear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178C21C145A0A0037CA13 /* clear@2x.png */; };
+		20C035461C16ED4E00CD4B7C /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C035441C16ED4E00CD4B7C /* exit.png */; };
+		20C035471C16ED4E00CD4B7C /* exit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C035451C16ED4E00CD4B7C /* exit@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,8 +63,6 @@
 /* Begin PBXFileReference section */
 		2012764B1C151CB50089D95D /* delay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delay.png; path = RussianCube/images/TumblrMenu/delay.png; sourceTree = "<group>"; };
 		2012764C1C151CB50089D95D /* delay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "delay@2x.png"; path = "RussianCube/images/TumblrMenu/delay@2x.png"; sourceTree = "<group>"; };
-		2012764D1C151CB50089D95D /* exe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exe.png; path = RussianCube/images/TumblrMenu/exe.png; sourceTree = "<group>"; };
-		2012764E1C151CB50089D95D /* exe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exe@2x.png"; path = "RussianCube/images/TumblrMenu/exe@2x.png"; sourceTree = "<group>"; };
 		2012764F1C151CB50089D95D /* oops.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = oops.png; path = RussianCube/images/TumblrMenu/oops.png; sourceTree = "<group>"; };
 		201276501C151CB50089D95D /* oops@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "oops@2x.png"; path = "RussianCube/images/TumblrMenu/oops@2x.png"; sourceTree = "<group>"; };
 		201276511C151CB50089D95D /* xcode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = xcode.png; path = RussianCube/images/TumblrMenu/xcode.png; sourceTree = "<group>"; };
@@ -118,6 +116,8 @@
 		206178BE1C14215F0037CA13 /* callDragon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "callDragon@2x.png"; path = "RussianCube/images/TumblrMenu/callDragon@2x.png"; sourceTree = "<group>"; };
 		206178C11C145A0A0037CA13 /* clear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clear.png; path = RussianCube/images/TumblrMenu/clear.png; sourceTree = "<group>"; };
 		206178C21C145A0A0037CA13 /* clear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clear@2x.png"; path = "RussianCube/images/TumblrMenu/clear@2x.png"; sourceTree = "<group>"; };
+		20C035441C16ED4E00CD4B7C /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = RussianCube/images/TumblrMenu/exit.png; sourceTree = "<group>"; };
+		20C035451C16ED4E00CD4B7C /* exit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exit@2x.png"; path = "RussianCube/images/TumblrMenu/exit@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,11 +197,11 @@
 		2061783A1C0FDEFB0037CA13 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				20C035441C16ED4E00CD4B7C /* exit.png */,
+				20C035451C16ED4E00CD4B7C /* exit@2x.png */,
 				2012765B1C1523840089D95D /* gameMenu.png */,
 				2012764B1C151CB50089D95D /* delay.png */,
 				2012764C1C151CB50089D95D /* delay@2x.png */,
-				2012764D1C151CB50089D95D /* exe.png */,
-				2012764E1C151CB50089D95D /* exe@2x.png */,
 				2012764F1C151CB50089D95D /* oops.png */,
 				201276501C151CB50089D95D /* oops@2x.png */,
 				201276511C151CB50089D95D /* xcode.png */,
@@ -343,13 +343,13 @@
 				2012765A1C151CB50089D95D /* xcode@2x.png in Resources */,
 				206178AA1C127CB70037CA13 /* modal_background@2x.png in Resources */,
 				206178C01C14215F0037CA13 /* callDragon@2x.png in Resources */,
+				20C035471C16ED4E00CD4B7C /* exit@2x.png in Resources */,
 				206178931C127C780037CA13 /* cubeD.png in Resources */,
 				206178911C127C780037CA13 /* cubeC.png in Resources */,
 				206178BF1C14215F0037CA13 /* callDragon.png in Resources */,
 				206178A91C127CB70037CA13 /* modal_background.png in Resources */,
 				206178941C127C780037CA13 /* cubeE.png in Resources */,
 				206178901C127C780037CA13 /* cubeBox.png in Resources */,
-				201276551C151CB50089D95D /* exe.png in Resources */,
 				2061788E1C127C780037CA13 /* cubeA.png in Resources */,
 				201276591C151CB50089D95D /* xcode.png in Resources */,
 				201276541C151CB50089D95D /* delay@2x.png in Resources */,
@@ -360,7 +360,7 @@
 				206178961C127C780037CA13 /* cubeG.png in Resources */,
 				206178181C0FBC220037CA13 /* Assets.xcassets in Resources */,
 				2061788F1C127C780037CA13 /* cubeB.png in Resources */,
-				201276561C151CB50089D95D /* exe@2x.png in Resources */,
+				20C035461C16ED4E00CD4B7C /* exit.png in Resources */,
 				201276581C151CB50089D95D /* oops@2x.png in Resources */,
 				206178951C127C780037CA13 /* cubeF.png in Resources */,
 				206178921C127C780037CA13 /* cubeCell.png in Resources */,
