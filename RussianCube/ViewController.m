@@ -69,6 +69,8 @@
 @property (nonatomic,strong)UIView *achieveView;
 //菜单中tableView的控制类
 @property (nonatomic,strong)GameMenuTableViewController *gameMenuTVC;
+//开启延迟之后，延迟的次数，初始为10，到0结束
+@property (nonatomic)int delayCount;
 
 @end
 
@@ -82,6 +84,7 @@ static NSMutableString *DismissFlag = nil;
     self.gameLevel = 1;
     self.gameScore = 0;
     DismissFlag = 0;
+    self.delayCount = 0;
     //初始化游戏等分记录归档的位置
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     self.recordPath = [documentPath stringByAppendingPathComponent:@"data.archiver"];
@@ -371,7 +374,13 @@ static NSMutableString *DismissFlag = nil;
 - (myCube *)getCurrentCube {
     myCube * cube = self.nextCube;
     self.nextCube = [self getNextCube:CUBE_TYPE_NUMBER];
-    cube.speed = 2.0/(self.gameLevel+1);
+    if (self.delayCount > 0) {
+        cube.speed = 1;
+        [self.gameView setAlpha:(1-0.7/10*self.delayCount--)];
+    }else {
+        cube.speed = 2.0/(self.gameLevel+1);
+        [self.gameView setAlpha:1];
+    }
     
     //把所有的cell添加到allCell中
     [self.allCells addObject:cube.subCube1];
@@ -422,6 +431,26 @@ static NSMutableString *DismissFlag = nil;
     }
     [self.gameView addSubview:cube.previewCube];
     return cube;
+}
+
+- (void)passCurrentCube {
+    [self removeCrashFlagOfCube];
+    [self.allCells removeObject:self.currentCube.subCube1];
+    [self.allCells removeObject:self.currentCube.subCube2];
+    [self.allCells removeObject:self.currentCube.subCube3];
+    [self.allCells removeObject:self.currentCube.subCube4];
+    [self.currentCube.subCube1 removeFromSuperview];
+    [self.currentCube.subCube2 removeFromSuperview];
+    [self.currentCube.subCube3 removeFromSuperview];
+    [self.currentCube.subCube4 removeFromSuperview];
+    
+    self.crashed = YES;
+    //继续游戏
+    //如果存在则销毁定时器
+    if (self.cubeDown != nil) {
+        [self.cubeDown invalidate];
+    }
+    self.cubeDown = [NSTimer scheduledTimerWithTimeInterval:self.currentCube.speed target:self selector:@selector(goDown) userInfo:nil repeats:NO];
 }
 
 //根据格子的index返回格子中心的X和Y值
@@ -666,6 +695,7 @@ static NSMutableString *DismissFlag = nil;
         [DismissFlag appendString:@" 召唤神龙"];
         if ([ViewController ifDismissBugView]) {
             self.nextCube = [self getNextCube:3];
+            [self passCurrentCube];
             [self.cubeDown setFireDate:[NSDate date]];
             [self.gameView addGestureRecognizer:self.tap];
             [self.gameView addGestureRecognizer:self.pan];
@@ -690,10 +720,11 @@ static NSMutableString *DismissFlag = nil;
             [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
             [DismissFlag appendString:@"Oops"];
         }else {
-            [DismissFlag appendString:@"Oops"];
+            [DismissFlag appendString:@" Oops"];
         }
         
         if ([ViewController ifDismissBugView]) {
+            //TODO
             [self.cubeDown setFireDate:[NSDate date]];
             [self.gameView addGestureRecognizer:self.tap];
             [self.gameView addGestureRecognizer:self.pan];
@@ -707,6 +738,8 @@ static NSMutableString *DismissFlag = nil;
         }
 
         if ([ViewController ifDismissBugView]) {
+            self.delayCount = 10;
+            [self passCurrentCube];
             [self.cubeDown setFireDate:[NSDate date]];
             [self.gameView addGestureRecognizer:self.tap];
             [self.gameView addGestureRecognizer:self.pan];
@@ -715,6 +748,7 @@ static NSMutableString *DismissFlag = nil;
     [menuView addMenuItemWithTitle:@"执行" andIcon:[UIImage imageNamed:@"exe.png"] andSelectedBlock:^{
         if ([DismissFlag isEqualToString:@"执行 Xcod"]) {
             [DismissFlag appendString:@"e"];
+            //TODO
             return;
         }else {
             [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
