@@ -664,12 +664,12 @@ static NSMutableString *DismissFlag = nil;
 
     if ([DismissFlag isEqualToString:@"执行 召唤神龙"] || [DismissFlag isEqualToString:@"执行 清除计划"] ||
         [DismissFlag isEqualToString:@"Oops"] || [DismissFlag isEqualToString:@"执行 延迟魔法"] ||
-        [DismissFlag isEqualToString:@"执行 Xcode"]) {
+        [DismissFlag isEqualToString:@"执行 Xcode"] || [DismissFlag isEqualToString:@"你到底还要不要开挂？！不陪你玩了 =.="] ) {
         
         return YES;
     }else if (![DismissFlag isEqualToString:@"执行"] &&![DismissFlag isEqualToString:@"执行 X"] &&
               ![DismissFlag isEqualToString:@"执行 Xc"] && ![DismissFlag isEqualToString:@"执行 Xco"] &&
-              ![DismissFlag isEqualToString:@"执行 Xcod"]) {
+              ![DismissFlag isEqualToString:@"执行 Xcod"] && ![DismissFlag isEqualToString:@"不执行"]) {
         [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
     }
     return NO;
@@ -749,6 +749,16 @@ static NSMutableString *DismissFlag = nil;
         if ([DismissFlag isEqualToString:@"执行 Xcod"]) {
             [DismissFlag appendString:@"e"];
             //TODO
+            return;
+        }else if ([DismissFlag isEqualToString:@"执行"]) {
+            [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
+            [DismissFlag appendString:@"不"];
+        }else if ([DismissFlag isEqualToString:@"不执行"]) {
+            [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
+            [DismissFlag appendString:@"你到底还要不要开挂？！不陪你玩了 =.="];
+            [self.cubeDown setFireDate:[NSDate date]];
+            [self.gameView addGestureRecognizer:self.tap];
+            [self.gameView addGestureRecognizer:self.pan];
             return;
         }else {
             [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
