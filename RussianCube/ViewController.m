@@ -22,7 +22,17 @@
 
 //一共多少中cube，用于getNextCube的时候需要用到
 #define CUBE_TYPE_NUMBER 7
-#define OOPS_MODE_NUMBER 1
+//一共有多少中oops的模式
+#define OOPS_MODE_NUMBER 3
+//迷雾最多要多少回合
+#define MAX_MIST_COUNT 30
+//迷雾到达最大后会持续多少回合
+#define MIST_CONTINUE_COUNT 10
+//迷雾最大时的不透明度
+#define MAX_MIST_ALPHA 1.0
+//开启异形世界后新增的奇怪cube的数量
+#define STRANGE_CUBE_NUMBER 0
+
 
 //游戏难度，用于计算cube下降的时间间隔
 @property (nonatomic)int gameLevel;
@@ -74,10 +84,16 @@
 @property (nonatomic,strong)UIView *achieveView;
 //菜单中tableView的控制类
 @property (nonatomic,strong)GameMenuTableViewController *gameMenuTVC;
+//oops模式开始前的分数与等级
+@property (nonatomic)int beforeOopsLevel;
+@property (nonatomic)long beforeOopsScore;
 //开启逆世界之后，左右翻转的标志，YES为翻转，NO为正常
 @property (nonatomic)BOOL oppositeFlag;
-@property (nonatomic)int beforeOppositeGameLevel;
-@property (nonatomic)long beforeOppositeGameScore;
+//开启迷雾之后，延迟的次数，初始为10，到0结束
+@property (nonatomic)int mistCount;
+@property (nonatomic,strong)UIImageView *mistView;
+//开启异形之后，getNextCube是否会得到奇怪cube的标志，YES为是，NO为否
+@property (nonatomic)BOOL strangeFlag;
 //开启延迟之后，延迟的次数，初始为10，到0结束
 @property (nonatomic)int delayCount;
 
@@ -95,6 +111,10 @@ static NSMutableString *DismissFlag = nil;
     DismissFlag = 0;
     self.delayCount = 0;
     self.oppositeFlag = NO;
+    self.mistCount = 0;
+    self.mistView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 67, 300, 600)];
+    self.mistView.image = [UIImage imageNamed:@"mistViewBackground.png"];
+    self.strangeFlag = NO;
     //初始化游戏等分记录归档的位置
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     self.recordPath = [documentPath stringByAppendingPathComponent:@"data.archiver"];
@@ -116,7 +136,7 @@ static NSMutableString *DismissFlag = nil;
     //初始化碰撞判定为YES，在goDown中用到
     self.crashed = YES;
     self.currentCube = nil;
-    self.nextCube = [self getNextCube:CUBE_TYPE_NUMBER];
+    self.nextCube = [self getNextCube:-1];
     self.theLock = [[NSLock alloc] init];
     
     //启动方块降落的计时器
@@ -235,6 +255,8 @@ static NSMutableString *DismissFlag = nil;
     }
     if (lineCount != 0) {
         long getScore = (2*lineCount-1)*100*(self.oppositeFlag?2:1);
+        getScore = getScore*(self.mistCount>0?1.5:1);
+        getScore = getScore*(self.strangeFlag?2:1);
         [self resetGameLevelAndScore:(self.gameScore+getScore)];
         
         [self refreshCubeBox];
@@ -260,6 +282,9 @@ static NSMutableString *DismissFlag = nil;
     //重置级别和分数
     [self resetGameLevelAndScore:0];
     self.delayCount = 0;
+    self.oppositeFlag = NO;
+    self.mistCount = 0;
+    self.strangeFlag = NO;
     
     [self clearCubeBox];
 }
@@ -338,6 +363,27 @@ static NSMutableString *DismissFlag = nil;
         [self.gameView addSubview:self.currentCube.subCube2];
         [self.gameView addSubview:self.currentCube.subCube3];
         [self.gameView addSubview:self.currentCube.subCube4];
+        //开启迷雾世界
+        if (self.mistCount > 0) {
+            self.mistCount--;
+            [self.mistView removeFromSuperview];
+            if (self.mistCount >= ((MAX_MIST_COUNT-MIST_CONTINUE_COUNT)/2+MIST_CONTINUE_COUNT)) {
+                //起雾 29~20
+                [self.mistView setAlpha:MAX_MIST_ALPHA/(MAX_MIST_COUNT-MIST_CONTINUE_COUNT)*2*(MAX_MIST_COUNT-self.mistCount)];
+            } else if (self.mistCount >= (MAX_MIST_COUNT-MIST_CONTINUE_COUNT)/2) {
+                //正浓 19~10
+                [self.mistView setAlpha:MAX_MIST_ALPHA];
+            } else {
+                //散了 9~0
+                [self.mistView setAlpha:MAX_MIST_ALPHA/(MAX_MIST_COUNT-MIST_CONTINUE_COUNT)*2*self.mistCount];
+            }
+            [self.gameView addSubview:self.mistView];
+            //迷雾结束了
+            if (self.mistCount == 0) {
+                [self showAlertMessage:[NSString stringWithFormat:@"本次世界收益为：%ld积分，欢迎回归正常世界",(self.gameScore-self.beforeOopsScore)] ifYes:^{[self passCurrentCube];} ifNO:nil];
+                return;
+            }
+        }
         //结束判定
         if ([self isDownCrashed]) {
             [self died];
@@ -359,9 +405,11 @@ static NSMutableString *DismissFlag = nil;
         }
         [self.theLock unlock];
     }
-    if (self.oppositeFlag == YES && self.crashed == YES && self.gameLevel > self.beforeOppositeGameLevel) {
+    //判断 逆转世界 或者 异形世界 满足结束条件（level升级）
+    if ((self.oppositeFlag == YES || self.strangeFlag == YES) && self.crashed == YES && self.gameLevel > self.beforeOopsLevel) {
         self.oppositeFlag = NO;
-        [self showAlertMessage:[NSString stringWithFormat:@"本次世界收益为：%ld积分，欢迎回归正常世界",(self.gameScore-self.beforeOppositeGameScore)] ifYes:^{
+        self.strangeFlag = NO;
+        [self showAlertMessage:[NSString stringWithFormat:@"本次世界收益为：%ld积分，欢迎回归正常世界",(self.gameScore-self.beforeOopsScore)] ifYes:^{
             self.cubeDown = [NSTimer scheduledTimerWithTimeInterval:self.currentCube.speed target:self selector:@selector(goDown) userInfo:nil repeats:NO];
         } ifNO:nil];
         return;
@@ -429,7 +477,7 @@ static NSMutableString *DismissFlag = nil;
 //初始化其速度和位置
 - (myCube *)getCurrentCube {
     myCube * cube = self.nextCube;
-    self.nextCube = [self getNextCube:CUBE_TYPE_NUMBER];
+    self.nextCube = [self getNextCube:-1];
     if (self.delayCount > 0) {
         cube.speed = 1;
         [self.gameView setAlpha:(1-0.7/10*self.delayCount--)];
@@ -572,7 +620,12 @@ static NSMutableString *DismissFlag = nil;
         [self horizontalMove:(int)(deltaPoint.x)];
         [sender setTranslation:CGPointZero inView:self.gameView];
     }
-    if (deltaPoint.y > 15) {
+    if (self.oppositeFlag == YES && deltaPoint.y < -15) {
+        //判断是否是在逆世界，如果是，则操作相反
+        [self verticalMove];
+        [sender setTranslation:CGPointZero inView:self.gameView];
+    }
+    if (self.oppositeFlag == NO && deltaPoint.y > 15) {
 //        [self downToBottom];
         [self verticalMove];
         [sender setTranslation:CGPointZero inView:self.gameView];
@@ -799,28 +852,11 @@ static NSMutableString *DismissFlag = nil;
     [menuView addMenuItemWithTitle:@"Oops" andIcon:[UIImage imageNamed:@"oops.png"] andSelectedBlock:^{
         [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
         [DismissFlag appendString:@"Oops! Good luck!"];
-
-        // 随机选择一个模式
-        int oopsMode = arc4random()%OOPS_MODE_NUMBER;
-        switch (oopsMode) {
-            case 0:
-                //逆世界
-                [self showAlertMessage:@"世界主题：《逆世界》\n世界奖励：获得积分翻倍\n生存目标：Level上升1级\n失败惩罚：死亡" ifYes:^{
-                    self.oppositeFlag = YES;
-                    self.beforeOppositeGameLevel = self.gameLevel;
-                    self.beforeOppositeGameScore = self.gameScore;
-                    [self continueGame];
-                } ifNO:^{[self continueGame];}];
-                break;
-//            case 1:
-//                //异形
-//                break;
-//            case 2:
-//                //迷雾
-//                break;
-//            default:
-//                break;
+        if (self.oppositeFlag == YES || self.mistCount != 0 || self.strangeFlag == YES) {
+            [self showAlertMessage:@"请先完成本世界的任务！" ifYes:^{[self continueGame];} ifNO:nil];
+            return;
         }
+        [self getRandomMode];
     }];
     [menuView addMenuItemWithTitle:@"延迟" andIcon:[UIImage imageNamed:@"delay.png"] andSelectedBlock:^{
         [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
@@ -864,7 +900,7 @@ static NSMutableString *DismissFlag = nil;
         [self.cubeIndex replaceObjectAtIndex:i withObject:@NO];
     }
     self.currentCube = nil;
-    self.nextCube = [self getNextCube:CUBE_TYPE_NUMBER];
+    self.nextCube = [self getNextCube:-1];
     self.crashed = YES;
     //继续游戏
     //如果存在则销毁定时器
@@ -872,6 +908,58 @@ static NSMutableString *DismissFlag = nil;
         [self.cubeDown invalidate];
     }
     self.cubeDown = [NSTimer scheduledTimerWithTimeInterval:self.currentCube.speed target:self selector:@selector(goDown) userInfo:nil repeats:NO];
+}
+
+- (void)getRandomMode {
+    // 随机选择一个模式
+    int oopsMode = arc4random()%OOPS_MODE_NUMBER;
+
+    switch (oopsMode) {
+        case 0: {
+            //逆世界
+            [self showAlertMessage:@"世界主题：《逆转未来》\n世界描述：左右上下相反\n世界奖励：所得积分翻倍\n生存目标：Level上升1级\n放弃惩罚：扣除500积分\n失败惩罚：死亡" ifYes:^{
+                self.oppositeFlag = YES;
+                self.beforeOopsLevel = self.gameLevel;
+                self.beforeOopsScore = self.gameScore;
+                [self continueGame];
+            } ifNO:^{
+                self.gameScore = self.gameScore<500?0:self.gameScore-500;
+                [self resetGameLevelAndScore:self.gameScore];
+                [self continueGame];
+            }];
+        
+            break;
+        }
+        case 1: {
+            //迷雾
+            [self showAlertMessage:@"世界主题：《迷雾》\n世界描述：听说高的地方雾大\n世界奖励：所得积分x1.5\n生存目标：坚持30回合\n放弃惩罚：扣除200积分\n失败惩罚：死亡" ifYes:^{
+                self.mistCount = MAX_MIST_COUNT;
+                self.beforeOopsScore = self.gameScore;
+                [self continueGame];
+            } ifNO:^{
+                self.gameScore = self.gameScore<200?0:self.gameScore-200;
+                [self resetGameLevelAndScore:self.gameScore];
+                [self continueGame];
+            }];
+
+            break;
+        }
+        case 2: {
+            // 异形
+            [self showAlertMessage:@"世界主题：《异形》\n世界描述：长得残非我错\n世界奖励：所得积分翻倍\n生存目标：Level上升1级\n放弃惩罚：扣除1000积分\n失败惩罚：死亡" ifYes:^{
+                self.strangeFlag = YES;
+                self.beforeOopsLevel = self.gameLevel;
+                self.beforeOopsScore = self.gameScore;
+                [self continueGame];
+            } ifNO:^{
+                self.gameScore = self.gameScore<1000?0:self.gameScore-1000;
+                [self resetGameLevelAndScore:self.gameScore];
+                [self continueGame];
+            }];
+            
+            break;
+        }
+    }
 }
 
 - (void)showAlertMessage:(NSString *)msg ifYes:(void(^)(void))doYes ifNO:(void(^)(void))doNo {

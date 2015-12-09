@@ -48,6 +48,7 @@
 		206178C41C145A0A0037CA13 /* clear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178C21C145A0A0037CA13 /* clear@2x.png */; };
 		20C035461C16ED4E00CD4B7C /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C035441C16ED4E00CD4B7C /* exit.png */; };
 		20C035471C16ED4E00CD4B7C /* exit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C035451C16ED4E00CD4B7C /* exit@2x.png */; };
+		20C035491C1832A400CD4B7C /* mistViewBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C035481C1832A400CD4B7C /* mistViewBackground.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,7 @@
 		206178C21C145A0A0037CA13 /* clear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clear@2x.png"; path = "RussianCube/images/TumblrMenu/clear@2x.png"; sourceTree = "<group>"; };
 		20C035441C16ED4E00CD4B7C /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = RussianCube/images/TumblrMenu/exit.png; sourceTree = "<group>"; };
 		20C035451C16ED4E00CD4B7C /* exit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exit@2x.png"; path = "RussianCube/images/TumblrMenu/exit@2x.png"; sourceTree = "<group>"; };
+		20C035481C1832A400CD4B7C /* mistViewBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mistViewBackground.png; path = RussianCube/images/TumblrMenu/mistViewBackground.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +199,7 @@
 		2061783A1C0FDEFB0037CA13 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				20C035481C1832A400CD4B7C /* mistViewBackground.png */,
 				20C035441C16ED4E00CD4B7C /* exit.png */,
 				20C035451C16ED4E00CD4B7C /* exit@2x.png */,
 				2012765B1C1523840089D95D /* gameMenu.png */,
@@ -353,6 +356,7 @@
 				2061788E1C127C780037CA13 /* cubeA.png in Resources */,
 				201276591C151CB50089D95D /* xcode.png in Resources */,
 				201276541C151CB50089D95D /* delay@2x.png in Resources */,
+				20C035491C1832A400CD4B7C /* mistViewBackground.png in Resources */,
 				201276531C151CB50089D95D /* delay.png in Resources */,
 				2061781B1C0FBC220037CA13 /* LaunchScreen.storyboard in Resources */,
 				206178C31C145A0A0037CA13 /* clear.png in Resources */,
