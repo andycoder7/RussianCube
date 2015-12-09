@@ -22,6 +22,7 @@
 
 //一共多少中cube，用于getNextCube的时候需要用到
 #define CUBE_TYPE_NUMBER 7
+#define OOPS_MODE_NUMBER 1
 
 //游戏难度，用于计算cube下降的时间间隔
 @property (nonatomic)int gameLevel;
@@ -73,6 +74,10 @@
 @property (nonatomic,strong)UIView *achieveView;
 //菜单中tableView的控制类
 @property (nonatomic,strong)GameMenuTableViewController *gameMenuTVC;
+//开启逆世界之后，左右翻转的标志，YES为翻转，NO为正常
+@property (nonatomic)BOOL oppositeFlag;
+@property (nonatomic)int beforeOppositeGameLevel;
+@property (nonatomic)long beforeOppositeGameScore;
 //开启延迟之后，延迟的次数，初始为10，到0结束
 @property (nonatomic)int delayCount;
 
@@ -89,6 +94,7 @@ static NSMutableString *DismissFlag = nil;
     self.gameScore = 0;
     DismissFlag = 0;
     self.delayCount = 0;
+    self.oppositeFlag = NO;
     //初始化游戏等分记录归档的位置
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     self.recordPath = [documentPath stringByAppendingPathComponent:@"data.archiver"];
@@ -228,10 +234,9 @@ static NSMutableString *DismissFlag = nil;
         }
     }
     if (lineCount != 0) {
-        self.gameScore += (2*lineCount-1)*100;
-        [self.gameScoreLabelValue setText:[NSString stringWithFormat:@"%ld",self.gameScore]];
-        self.gameLevel = (int)(self.gameScore/1000+1);
-        [self.gameLevelLabelValue setText:[NSString stringWithFormat:@"%d", self.gameLevel]];
+        long getScore = (2*lineCount-1)*100*(self.oppositeFlag?2:1);
+        [self resetGameLevelAndScore:(self.gameScore+getScore)];
+        
         [self refreshCubeBox];
         //判断是否需要更新记录
         if (self.gameScore > self.gameScoreRecord) {
@@ -353,6 +358,13 @@ static NSMutableString *DismissFlag = nil;
             [self setCenterForCube:self.currentCube];
         }
         [self.theLock unlock];
+    }
+    if (self.oppositeFlag == YES && self.crashed == YES && self.gameLevel > self.beforeOppositeGameLevel) {
+        self.oppositeFlag = NO;
+        [self showAlertMessage:[NSString stringWithFormat:@"本次世界收益为：%ld积分，欢迎回归正常世界",(self.gameScore-self.beforeOppositeGameScore)] ifYes:^{
+            self.cubeDown = [NSTimer scheduledTimerWithTimeInterval:self.currentCube.speed target:self selector:@selector(goDown) userInfo:nil repeats:NO];
+        } ifNO:nil];
+        return;
     }
     self.cubeDown = [NSTimer scheduledTimerWithTimeInterval:self.currentCube.speed target:self selector:@selector(goDown) userInfo:nil repeats:NO];
 }
@@ -553,6 +565,10 @@ static NSMutableString *DismissFlag = nil;
 - (void)moveCube:(UIPanGestureRecognizer *)sender {
     CGPoint deltaPoint = [sender translationInView:self.gameView];
     if (deltaPoint.x < -15 || deltaPoint.x > 15) {
+        if (self.oppositeFlag == YES) {
+            //判断是否是在逆世界，如果是，则操作相反
+            deltaPoint.x = deltaPoint.x * -1;
+        }
         [self horizontalMove:(int)(deltaPoint.x)];
         [sender setTranslation:CGPointZero inView:self.gameView];
     }
@@ -783,9 +799,27 @@ static NSMutableString *DismissFlag = nil;
     [menuView addMenuItemWithTitle:@"Oops" andIcon:[UIImage imageNamed:@"oops.png"] andSelectedBlock:^{
         [DismissFlag deleteCharactersInRange:NSMakeRange(0,[DismissFlag length])];
         [DismissFlag appendString:@"Oops! Good luck!"];
-        if ([ViewController ifDismissBugView]) {
-            //TODO
-            [self continueGame];
+
+        // 随机选择一个模式
+        int oopsMode = arc4random()%OOPS_MODE_NUMBER;
+        switch (oopsMode) {
+            case 0:
+                //逆世界
+                [self showAlertMessage:@"世界主题：《逆世界》\n世界奖励：获得积分翻倍\n生存目标：Level上升1级\n失败惩罚：死亡" ifYes:^{
+                    self.oppositeFlag = YES;
+                    self.beforeOppositeGameLevel = self.gameLevel;
+                    self.beforeOppositeGameScore = self.gameScore;
+                    [self continueGame];
+                } ifNO:^{[self continueGame];}];
+                break;
+//            case 1:
+//                //异形
+//                break;
+//            case 2:
+//                //迷雾
+//                break;
+//            default:
+//                break;
         }
     }];
     [menuView addMenuItemWithTitle:@"延迟" andIcon:[UIImage imageNamed:@"delay.png"] andSelectedBlock:^{
@@ -842,18 +876,22 @@ static NSMutableString *DismissFlag = nil;
 
 - (void)showAlertMessage:(NSString *)msg ifYes:(void(^)(void))doYes ifNO:(void(^)(void))doNo {
     UIAlertController * alertController = [UIAlertController alertControllerWithTitle:msg message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *actionSure = [UIAlertAction actionWithTitle:@"确认"
-                                                         style:UIAlertActionStyleDestructive
-                                                       handler:^(UIAlertAction * _Nonnull action) {
-                                                           doYes();
-                                                       }];
-    UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"取消"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                             doNo();
-                                                         }];
-    [alertController addAction:actionSure];
-    [alertController addAction:actionCancel];
+    if (doYes != nil) {
+        UIAlertAction *actionSure = [UIAlertAction actionWithTitle:@"确认"
+                                                             style:UIAlertActionStyleDestructive
+                                                           handler:^(UIAlertAction * _Nonnull action) {
+                                                               doYes();
+                                                           }];
+        [alertController addAction:actionSure];
+    }
+    if (doNo != nil) {
+        UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"取消"
+                                                               style:UIAlertActionStyleCancel
+                                                             handler:^(UIAlertAction * _Nonnull action) {
+                                                                 doNo();
+                                                             }];
+        [alertController addAction:actionCancel];
+    }
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
