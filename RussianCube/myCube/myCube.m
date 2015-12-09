@@ -19,6 +19,7 @@
         self.subCube2 = [[UIImageView alloc] initWithImage:self.cubeImage];
         self.subCube3 = [[UIImageView alloc] initWithImage:self.cubeImage];
         self.subCube4 = [[UIImageView alloc] initWithImage:self.cubeImage];
+        self.subCubeViews = [[NSMutableArray alloc] init];
     }
     return self;
 }

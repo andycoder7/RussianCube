@@ -23,8 +23,10 @@
 @property (nonatomic,strong) UIImageView *subCube4;
 
 // =====================以下属性和方法需要在子类中初始化和重载=============================
+//存储cube中cell的UIImageView
+@property (nonatomic,strong)NSMutableArray* subCubeViews;
 //存储cube中cell的index
-@property (nonatomic)NSMutableArray *subCubes;
+@property (nonatomic,strong)NSMutableArray *subCubes;
 //用于显示在右侧预览框中
 @property (nonatomic)int previewX;
 @property (nonatomic)int previewY;

@@ -17,6 +17,9 @@
         self.previewX = 300+3+5;
         self.previewY = 67+15;
         self.subCubes = [[NSMutableArray alloc] initWithObjects:@5,@15,@24,@25,nil];
+        for (int i = 0; i < [self.subCubes count]; i++) {
+            [self.subCubeViews addObject:[[UIImageView alloc] initWithImage:self.cubeImage]];
+        }
     }
     return self;
 }

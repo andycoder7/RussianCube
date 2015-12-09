@@ -15,6 +15,14 @@
 #import "CubeE.h"
 #import "CubeF.h"
 #import "CubeG.h"
+#import "CubeH.h"
+#import "CubeI.h"
+#import "CubeJ.h"
+#import "CubeK.h"
+#import "CubeL.h"
+#import "CubeM.h"
+#import "CubeN.h"
+#import "CubeO.h"
 #import "CHTumblrMenuView.h"
 #import "GameMenuTableViewController.h"
 
@@ -31,7 +39,7 @@
 //迷雾最大时的不透明度
 #define MAX_MIST_ALPHA 1.0
 //开启异形世界后新增的奇怪cube的数量
-#define STRANGE_CUBE_NUMBER 0
+#define STRANGE_CUBE_NUMBER 8
 
 
 //游戏难度，用于计算cube下降的时间间隔
@@ -359,10 +367,13 @@ static NSMutableString *DismissFlag = nil;
         self.currentCube = [self getCurrentCube];
         [self addCrashFlagOfCube];
         //把方块的四个cell添加到界面上
-        [self.gameView addSubview:self.currentCube.subCube1];
-        [self.gameView addSubview:self.currentCube.subCube2];
-        [self.gameView addSubview:self.currentCube.subCube3];
-        [self.gameView addSubview:self.currentCube.subCube4];
+        for (int i = 0; i < [self.currentCube.subCubes count]; i++) {
+            [self.gameView addSubview:self.currentCube.subCubeViews[i]];
+        }
+//        [self.gameView addSubview:self.currentCube.subCube1];
+//        [self.gameView addSubview:self.currentCube.subCube2];
+//        [self.gameView addSubview:self.currentCube.subCube3];
+//        [self.gameView addSubview:self.currentCube.subCube4];
         //开启迷雾世界
         if (self.mistCount > 0) {
             self.mistCount--;
@@ -487,10 +498,13 @@ static NSMutableString *DismissFlag = nil;
     }
     
     //把所有的cell添加到allCell中
-    [self.allCells addObject:cube.subCube1];
-    [self.allCells addObject:cube.subCube2];
-    [self.allCells addObject:cube.subCube3];
-    [self.allCells addObject:cube.subCube4];
+    for (int i = 0; i < [cube.subCubes count]; i++) {
+        [self.allCells addObject:cube.subCubeViews[i]];
+    }
+//    [self.allCells addObject:cube.subCube1];
+//    [self.allCells addObject:cube.subCube2];
+//    [self.allCells addObject:cube.subCube3];
+//    [self.allCells addObject:cube.subCube4];
     
     [self setCenterForCube:cube];
     return cube;
@@ -500,7 +514,7 @@ static NSMutableString *DismissFlag = nil;
 - (myCube *)getNextCube:(int)cubeType {
     myCube * cube = [[myCube alloc] init];
     if (cubeType < 0 || cubeType >= CUBE_TYPE_NUMBER) {
-        cubeType = arc4random()%CUBE_TYPE_NUMBER;
+        cubeType = arc4random()%(self.strangeFlag?CUBE_TYPE_NUMBER+STRANGE_CUBE_NUMBER:CUBE_TYPE_NUMBER);
     }
     switch (cubeType) {
         case 0:
@@ -524,8 +538,33 @@ static NSMutableString *DismissFlag = nil;
         case 6:
             cube = [[CubeG alloc]init];
             break;
+        case 7:
+            cube = [[CubeH alloc]init];
+            break;
+        case 8:
+            cube = [[CubeI alloc]init];
+            break;
+        case 9:
+            cube = [[CubeJ alloc]init];
+            break;
+        case 10:
+            cube = [[CubeK alloc]init];
+            break;
+        case 11:
+            cube = [[CubeL alloc]init];
+            break;
+        case 12:
+            cube = [[CubeM alloc]init];
+            break;
+        case 13:
+            cube = [[CubeN alloc]init];
+            break;
+        case 14:
+            cube = [[CubeO alloc]init];
+            break;
         default:
             cube = [[CubeA alloc]init];
+            NSLog(@"%d",cubeType);
             break;
     }
     cube.previewCube.frame = CGRectMake(cube.previewX, cube.previewY, cube.previewCube.frame.size.width, cube.previewCube.frame.size.height);
@@ -539,14 +578,18 @@ static NSMutableString *DismissFlag = nil;
 
 - (void)passCurrentCube {
     [self removeCrashFlagOfCube];
-    [self.allCells removeObject:self.currentCube.subCube1];
-    [self.allCells removeObject:self.currentCube.subCube2];
-    [self.allCells removeObject:self.currentCube.subCube3];
-    [self.allCells removeObject:self.currentCube.subCube4];
-    [self.currentCube.subCube1 removeFromSuperview];
-    [self.currentCube.subCube2 removeFromSuperview];
-    [self.currentCube.subCube3 removeFromSuperview];
-    [self.currentCube.subCube4 removeFromSuperview];
+    for (int i = 0; i < [self.currentCube.subCubeViews count]; i++) {
+        [self.allCells removeObject:self.currentCube.subCubeViews[i]];
+        [self.currentCube.subCubeViews[i] removeFromSuperview];
+    }
+//    [self.allCells removeObject:self.currentCube.subCube1];
+//    [self.allCells removeObject:self.currentCube.subCube2];
+//    [self.allCells removeObject:self.currentCube.subCube3];
+//    [self.allCells removeObject:self.currentCube.subCube4];
+//    [self.currentCube.subCube1 removeFromSuperview];
+//    [self.currentCube.subCube2 removeFromSuperview];
+//    [self.currentCube.subCube3 removeFromSuperview];
+//    [self.currentCube.subCube4 removeFromSuperview];
     
     self.crashed = YES;
     //继续游戏
@@ -598,14 +641,19 @@ static NSMutableString *DismissFlag = nil;
 
 //把当前cube的每个cell都移动到它对应的位置
 - (void)setCenterForCube:(myCube *)c {
-    c.subCube1.center = CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[0] integerValue]],
-                                    [self getCenterYFromCubeIndex:[c.subCubes[0] integerValue]]);
-    c.subCube2.center = CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[1] integerValue]],
-                                    [self getCenterYFromCubeIndex:[c.subCubes[1] integerValue]]);
-    c.subCube3.center = CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[2] integerValue]],
-                                    [self getCenterYFromCubeIndex:[c.subCubes[2] integerValue]]);
-    c.subCube4.center = CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[3] integerValue]],
-                                    [self getCenterYFromCubeIndex:[c.subCubes[3] integerValue]]);
+    
+    for (int i = 0; i < [c.subCubes count]; i++) {
+        [(UIImageView *)c.subCubeViews[i] setCenter:CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[i] integerValue]],
+                                                                [self getCenterYFromCubeIndex:[c.subCubes[i] integerValue]])];
+    }
+//    c.subCube1.center = CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[0] integerValue]],
+//                                    [self getCenterYFromCubeIndex:[c.subCubes[0] integerValue]]);
+//    c.subCube2.center = CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[1] integerValue]],
+//                                    [self getCenterYFromCubeIndex:[c.subCubes[1] integerValue]]);
+//    c.subCube3.center = CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[2] integerValue]],
+//                                    [self getCenterYFromCubeIndex:[c.subCubes[2] integerValue]]);
+//    c.subCube4.center = CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[3] integerValue]],
+//                                    [self getCenterYFromCubeIndex:[c.subCubes[3] integerValue]]);
 }
 
 # pragma mark --对cube的操作（平移、旋转、下降）
