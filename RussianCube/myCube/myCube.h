@@ -16,11 +16,6 @@
 @property (nonatomic)double speed;
 //cube的旋转次数
 @property (nonatomic)int rotateTimes;
-//cube的四个cell
-@property (nonatomic,strong) UIImageView *subCube1;
-@property (nonatomic,strong) UIImageView *subCube2;
-@property (nonatomic,strong) UIImageView *subCube3;
-@property (nonatomic,strong) UIImageView *subCube4;
 
 // =====================以下属性和方法需要在子类中初始化和重载=============================
 //存储cube中cell的UIImageView

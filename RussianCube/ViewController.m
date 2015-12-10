@@ -92,6 +92,8 @@
 @property (nonatomic,strong)UIView *achieveView;
 //菜单中tableView的控制类
 @property (nonatomic,strong)GameMenuTableViewController *gameMenuTVC;
+//开启延迟之后，延迟的次数，初始为10，到0结束
+@property (nonatomic)int delayCount;
 //oops模式开始前的分数与等级
 @property (nonatomic)int beforeOopsLevel;
 @property (nonatomic)long beforeOopsScore;
@@ -102,8 +104,8 @@
 @property (nonatomic,strong)UIImageView *mistView;
 //开启异形之后，getNextCube是否会得到奇怪cube的标志，YES为是，NO为否
 @property (nonatomic)BOOL strangeFlag;
-//开启延迟之后，延迟的次数，初始为10，到0结束
-@property (nonatomic)int delayCount;
+@property (nonatomic)int lastOopsMode;
+@property (nonatomic)int lastCubeType;
 
 @end
 
@@ -123,6 +125,8 @@ static NSMutableString *DismissFlag = nil;
     self.mistView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 67, 300, 600)];
     self.mistView.image = [UIImage imageNamed:@"mistViewBackground.png"];
     self.strangeFlag = NO;
+    self.lastOopsMode = -1;
+    self.lastCubeType = -1;
     //初始化游戏等分记录归档的位置
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     self.recordPath = [documentPath stringByAppendingPathComponent:@"data.archiver"];
@@ -292,7 +296,10 @@ static NSMutableString *DismissFlag = nil;
     self.delayCount = 0;
     self.oppositeFlag = NO;
     self.mistCount = 0;
+    [self.mistView removeFromSuperview];
     self.strangeFlag = NO;
+    self.lastOopsMode = -1;
+    self.lastCubeType = -1;
     
     [self clearCubeBox];
 }
@@ -370,10 +377,6 @@ static NSMutableString *DismissFlag = nil;
         for (int i = 0; i < [self.currentCube.subCubes count]; i++) {
             [self.gameView addSubview:self.currentCube.subCubeViews[i]];
         }
-//        [self.gameView addSubview:self.currentCube.subCube1];
-//        [self.gameView addSubview:self.currentCube.subCube2];
-//        [self.gameView addSubview:self.currentCube.subCube3];
-//        [self.gameView addSubview:self.currentCube.subCube4];
         //开启迷雾世界
         if (self.mistCount > 0) {
             self.mistCount--;
@@ -421,6 +424,7 @@ static NSMutableString *DismissFlag = nil;
         self.oppositeFlag = NO;
         self.strangeFlag = NO;
         [self showAlertMessage:[NSString stringWithFormat:@"本次世界收益为：%ld积分，欢迎回归正常世界",(self.gameScore-self.beforeOopsScore)] ifYes:^{
+            self.nextCube = [self getNextCube:-1];
             self.cubeDown = [NSTimer scheduledTimerWithTimeInterval:self.currentCube.speed target:self selector:@selector(goDown) userInfo:nil repeats:NO];
         } ifNO:nil];
         return;
@@ -501,10 +505,6 @@ static NSMutableString *DismissFlag = nil;
     for (int i = 0; i < [cube.subCubes count]; i++) {
         [self.allCells addObject:cube.subCubeViews[i]];
     }
-//    [self.allCells addObject:cube.subCube1];
-//    [self.allCells addObject:cube.subCube2];
-//    [self.allCells addObject:cube.subCube3];
-//    [self.allCells addObject:cube.subCube4];
     
     [self setCenterForCube:cube];
     return cube;
@@ -515,6 +515,10 @@ static NSMutableString *DismissFlag = nil;
     myCube * cube = [[myCube alloc] init];
     if (cubeType < 0 || cubeType >= CUBE_TYPE_NUMBER) {
         cubeType = arc4random()%(self.strangeFlag?CUBE_TYPE_NUMBER+STRANGE_CUBE_NUMBER:CUBE_TYPE_NUMBER);
+        while (self.lastCubeType == cubeType) {
+            cubeType = arc4random()%(self.strangeFlag?CUBE_TYPE_NUMBER+STRANGE_CUBE_NUMBER:CUBE_TYPE_NUMBER);
+        }
+        self.lastCubeType = cubeType;
     }
     switch (cubeType) {
         case 0:
@@ -582,14 +586,6 @@ static NSMutableString *DismissFlag = nil;
         [self.allCells removeObject:self.currentCube.subCubeViews[i]];
         [self.currentCube.subCubeViews[i] removeFromSuperview];
     }
-//    [self.allCells removeObject:self.currentCube.subCube1];
-//    [self.allCells removeObject:self.currentCube.subCube2];
-//    [self.allCells removeObject:self.currentCube.subCube3];
-//    [self.allCells removeObject:self.currentCube.subCube4];
-//    [self.currentCube.subCube1 removeFromSuperview];
-//    [self.currentCube.subCube2 removeFromSuperview];
-//    [self.currentCube.subCube3 removeFromSuperview];
-//    [self.currentCube.subCube4 removeFromSuperview];
     
     self.crashed = YES;
     //继续游戏
@@ -646,14 +642,6 @@ static NSMutableString *DismissFlag = nil;
         [(UIImageView *)c.subCubeViews[i] setCenter:CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[i] integerValue]],
                                                                 [self getCenterYFromCubeIndex:[c.subCubes[i] integerValue]])];
     }
-//    c.subCube1.center = CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[0] integerValue]],
-//                                    [self getCenterYFromCubeIndex:[c.subCubes[0] integerValue]]);
-//    c.subCube2.center = CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[1] integerValue]],
-//                                    [self getCenterYFromCubeIndex:[c.subCubes[1] integerValue]]);
-//    c.subCube3.center = CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[2] integerValue]],
-//                                    [self getCenterYFromCubeIndex:[c.subCubes[2] integerValue]]);
-//    c.subCube4.center = CGPointMake([self getCenterXFromCubeIndex:[c.subCubes[3] integerValue]],
-//                                    [self getCenterYFromCubeIndex:[c.subCubes[3] integerValue]]);
 }
 
 # pragma mark --对cube的操作（平移、旋转、下降）
@@ -959,8 +947,13 @@ static NSMutableString *DismissFlag = nil;
 }
 
 - (void)getRandomMode {
+    
     // 随机选择一个模式
     int oopsMode = arc4random()%OOPS_MODE_NUMBER;
+    while (oopsMode == self.lastOopsMode) {
+        oopsMode = arc4random()%OOPS_MODE_NUMBER;
+    }
+    self.lastOopsMode = oopsMode;
 
     switch (oopsMode) {
         case 0: {
