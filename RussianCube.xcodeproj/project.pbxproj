@@ -14,10 +14,8 @@
 		201276591C151CB50089D95D /* xcode.png in Resources */ = {isa = PBXBuildFile; fileRef = 201276511C151CB50089D95D /* xcode.png */; };
 		2012765A1C151CB50089D95D /* xcode@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201276521C151CB50089D95D /* xcode@2x.png */; };
 		2012765C1C1523840089D95D /* gameMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 2012765B1C1523840089D95D /* gameMenu.png */; };
-		2012765F1C1534EE0089D95D /* GameMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012765E1C1534EE0089D95D /* GameMenuTableViewController.m */; };
 		2061780D1C0FBC220037CA13 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2061780C1C0FBC220037CA13 /* main.m */; };
 		206178101C0FBC220037CA13 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2061780F1C0FBC220037CA13 /* AppDelegate.m */; };
-		206178131C0FBC220037CA13 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206178121C0FBC220037CA13 /* ViewController.m */; };
 		206178161C0FBC220037CA13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 206178141C0FBC220037CA13 /* Main.storyboard */; };
 		206178181C0FBC220037CA13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 206178171C0FBC220037CA13 /* Assets.xcassets */; };
 		2061781B1C0FBC220037CA13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 206178191C0FBC220037CA13 /* LaunchScreen.storyboard */; };
@@ -46,6 +44,8 @@
 		206178C01C14215F0037CA13 /* callDragon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178BE1C14215F0037CA13 /* callDragon@2x.png */; };
 		206178C31C145A0A0037CA13 /* clear.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178C11C145A0A0037CA13 /* clear.png */; };
 		206178C41C145A0A0037CA13 /* clear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 206178C21C145A0A0037CA13 /* clear@2x.png */; };
+		206E0EFD1C1ABB3300ACBB54 /* WorldGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206E0EFC1C1ABB3300ACBB54 /* WorldGameViewController.m */; };
+		206E0F001C1AC16400ACBB54 /* WorldGameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206E0EFF1C1AC16400ACBB54 /* WorldGameTableViewController.m */; };
 		20C035461C16ED4E00CD4B7C /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C035441C16ED4E00CD4B7C /* exit.png */; };
 		20C035471C16ED4E00CD4B7C /* exit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C035451C16ED4E00CD4B7C /* exit@2x.png */; };
 		20C035491C1832A400CD4B7C /* mistViewBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C035481C1832A400CD4B7C /* mistViewBackground.png */; };
@@ -65,6 +65,16 @@
 		20C0356B1C188A0E00CD4B7C /* CubeK.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C0356A1C188A0E00CD4B7C /* CubeK.m */; };
 		20C0356E1C188D0100CD4B7C /* CubeO.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C0356D1C188D0100CD4B7C /* CubeO.m */; };
 		20C035711C188D1900CD4B7C /* CubeN.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C035701C188D1900CD4B7C /* CubeN.m */; };
+		20C035751C199F3300CD4B7C /* beginAnimation0.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C035741C199F3300CD4B7C /* beginAnimation0.png */; };
+		20C035781C199F9200CD4B7C /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C035771C199F9200CD4B7C /* LaunchViewController.m */; };
+		20C0357E1C19B7EA00CD4B7C /* beginAnimation1.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C035791C19B7EA00CD4B7C /* beginAnimation1.png */; };
+		20C0357F1C19B7EA00CD4B7C /* beginAnimation2.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C0357A1C19B7EA00CD4B7C /* beginAnimation2.png */; };
+		20C035801C19B7EA00CD4B7C /* beginAnimation3.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C0357B1C19B7EA00CD4B7C /* beginAnimation3.png */; };
+		20C035811C19B7EA00CD4B7C /* beginAnimation4.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C0357C1C19B7EA00CD4B7C /* beginAnimation4.png */; };
+		20C035821C19B7EA00CD4B7C /* beginAnimation5.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C0357D1C19B7EA00CD4B7C /* beginAnimation5.png */; };
+		20C035861C1A784E00CD4B7C /* NormalGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C035851C1A784E00CD4B7C /* NormalGameViewController.m */; };
+		20C0358B1C1AA3C700CD4B7C /* cubeBox2.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C0358A1C1AA3C700CD4B7C /* cubeBox2.png */; };
+		20C0358E1C1AAA7600CD4B7C /* NormalGameMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C0358D1C1AAA7600CD4B7C /* NormalGameMenuTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,14 +95,10 @@
 		201276511C151CB50089D95D /* xcode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = xcode.png; path = RussianCube/images/TumblrMenu/xcode.png; sourceTree = "<group>"; };
 		201276521C151CB50089D95D /* xcode@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "xcode@2x.png"; path = "RussianCube/images/TumblrMenu/xcode@2x.png"; sourceTree = "<group>"; };
 		2012765B1C1523840089D95D /* gameMenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gameMenu.png; path = RussianCube/images/TumblrMenu/gameMenu.png; sourceTree = "<group>"; };
-		2012765D1C1534EE0089D95D /* GameMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameMenuTableViewController.h; sourceTree = "<group>"; };
-		2012765E1C1534EE0089D95D /* GameMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameMenuTableViewController.m; sourceTree = "<group>"; };
 		206178081C0FBC220037CA13 /* RussianCube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RussianCube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2061780C1C0FBC220037CA13 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2061780E1C0FBC220037CA13 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2061780F1C0FBC220037CA13 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		206178111C0FBC220037CA13 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		206178121C0FBC220037CA13 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		206178151C0FBC220037CA13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		206178171C0FBC220037CA13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2061781A1C0FBC220037CA13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -133,6 +139,10 @@
 		206178BE1C14215F0037CA13 /* callDragon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "callDragon@2x.png"; path = "RussianCube/images/TumblrMenu/callDragon@2x.png"; sourceTree = "<group>"; };
 		206178C11C145A0A0037CA13 /* clear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clear.png; path = RussianCube/images/TumblrMenu/clear.png; sourceTree = "<group>"; };
 		206178C21C145A0A0037CA13 /* clear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clear@2x.png"; path = "RussianCube/images/TumblrMenu/clear@2x.png"; sourceTree = "<group>"; };
+		206E0EFB1C1ABB3300ACBB54 /* WorldGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldGameViewController.h; sourceTree = "<group>"; };
+		206E0EFC1C1ABB3300ACBB54 /* WorldGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorldGameViewController.m; sourceTree = "<group>"; };
+		206E0EFE1C1AC16400ACBB54 /* WorldGameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldGameTableViewController.h; sourceTree = "<group>"; };
+		206E0EFF1C1AC16400ACBB54 /* WorldGameTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorldGameTableViewController.m; sourceTree = "<group>"; };
 		20C035441C16ED4E00CD4B7C /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit.png; path = RussianCube/images/TumblrMenu/exit.png; sourceTree = "<group>"; };
 		20C035451C16ED4E00CD4B7C /* exit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exit@2x.png"; path = "RussianCube/images/TumblrMenu/exit@2x.png"; sourceTree = "<group>"; };
 		20C035481C1832A400CD4B7C /* mistViewBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mistViewBackground.png; path = RussianCube/images/TumblrMenu/mistViewBackground.png; sourceTree = "<group>"; };
@@ -160,6 +170,19 @@
 		20C0356D1C188D0100CD4B7C /* CubeO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CubeO.m; path = myCube/CubeO.m; sourceTree = "<group>"; };
 		20C0356F1C188D1900CD4B7C /* CubeN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CubeN.h; path = myCube/CubeN.h; sourceTree = "<group>"; };
 		20C035701C188D1900CD4B7C /* CubeN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CubeN.m; path = myCube/CubeN.m; sourceTree = "<group>"; };
+		20C035741C199F3300CD4B7C /* beginAnimation0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = beginAnimation0.png; path = RussianCube/images/beginAnimation/beginAnimation0.png; sourceTree = "<group>"; };
+		20C035761C199F9200CD4B7C /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
+		20C035771C199F9200CD4B7C /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
+		20C035791C19B7EA00CD4B7C /* beginAnimation1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = beginAnimation1.png; path = RussianCube/images/beginAnimation/beginAnimation1.png; sourceTree = "<group>"; };
+		20C0357A1C19B7EA00CD4B7C /* beginAnimation2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = beginAnimation2.png; path = RussianCube/images/beginAnimation/beginAnimation2.png; sourceTree = "<group>"; };
+		20C0357B1C19B7EA00CD4B7C /* beginAnimation3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = beginAnimation3.png; path = RussianCube/images/beginAnimation/beginAnimation3.png; sourceTree = "<group>"; };
+		20C0357C1C19B7EA00CD4B7C /* beginAnimation4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = beginAnimation4.png; path = RussianCube/images/beginAnimation/beginAnimation4.png; sourceTree = "<group>"; };
+		20C0357D1C19B7EA00CD4B7C /* beginAnimation5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = beginAnimation5.png; path = RussianCube/images/beginAnimation/beginAnimation5.png; sourceTree = "<group>"; };
+		20C035841C1A784E00CD4B7C /* NormalGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormalGameViewController.h; sourceTree = "<group>"; };
+		20C035851C1A784E00CD4B7C /* NormalGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormalGameViewController.m; sourceTree = "<group>"; };
+		20C0358A1C1AA3C700CD4B7C /* cubeBox2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeBox2.png; path = RussianCube/images/myCube/cubeBox2.png; sourceTree = "<group>"; };
+		20C0358C1C1AAA7600CD4B7C /* NormalGameMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormalGameMenuTableViewController.h; sourceTree = "<group>"; };
+		20C0358D1C1AAA7600CD4B7C /* NormalGameMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormalGameMenuTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,15 +229,21 @@
 				2061784A1C101E070037CA13 /* myCube */,
 				2061780E1C0FBC220037CA13 /* AppDelegate.h */,
 				2061780F1C0FBC220037CA13 /* AppDelegate.m */,
-				206178111C0FBC220037CA13 /* ViewController.h */,
-				206178121C0FBC220037CA13 /* ViewController.m */,
+				20C035841C1A784E00CD4B7C /* NormalGameViewController.h */,
+				20C035851C1A784E00CD4B7C /* NormalGameViewController.m */,
+				20C0358C1C1AAA7600CD4B7C /* NormalGameMenuTableViewController.h */,
+				20C0358D1C1AAA7600CD4B7C /* NormalGameMenuTableViewController.m */,
+				206E0EFB1C1ABB3300ACBB54 /* WorldGameViewController.h */,
+				206E0EFC1C1ABB3300ACBB54 /* WorldGameViewController.m */,
+				206E0EFE1C1AC16400ACBB54 /* WorldGameTableViewController.h */,
+				206E0EFF1C1AC16400ACBB54 /* WorldGameTableViewController.m */,
+				20C035761C199F9200CD4B7C /* LaunchViewController.h */,
+				20C035771C199F9200CD4B7C /* LaunchViewController.m */,
 				206178141C0FBC220037CA13 /* Main.storyboard */,
 				206178171C0FBC220037CA13 /* Assets.xcassets */,
 				206178191C0FBC220037CA13 /* LaunchScreen.storyboard */,
 				2061781C1C0FBC220037CA13 /* Info.plist */,
 				2061780B1C0FBC220037CA13 /* Supporting Files */,
-				2012765D1C1534EE0089D95D /* GameMenuTableViewController.h */,
-				2012765E1C1534EE0089D95D /* GameMenuTableViewController.m */,
 			);
 			path = RussianCube;
 			sourceTree = "<group>";
@@ -239,39 +268,11 @@
 		2061783A1C0FDEFB0037CA13 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				20C035831C19B7F700CD4B7C /* beginAnimation */,
 				20C035481C1832A400CD4B7C /* mistViewBackground.png */,
-				20C035441C16ED4E00CD4B7C /* exit.png */,
-				20C035451C16ED4E00CD4B7C /* exit@2x.png */,
 				2012765B1C1523840089D95D /* gameMenu.png */,
-				2012764B1C151CB50089D95D /* delay.png */,
-				2012764C1C151CB50089D95D /* delay@2x.png */,
-				2012764F1C151CB50089D95D /* oops.png */,
-				201276501C151CB50089D95D /* oops@2x.png */,
-				201276511C151CB50089D95D /* xcode.png */,
-				201276521C151CB50089D95D /* xcode@2x.png */,
-				206178C11C145A0A0037CA13 /* clear.png */,
-				206178C21C145A0A0037CA13 /* clear@2x.png */,
-				206178BD1C14215F0037CA13 /* callDragon.png */,
-				206178BE1C14215F0037CA13 /* callDragon@2x.png */,
-				206178871C127C780037CA13 /* cubeBox.png */,
-				206178891C127C780037CA13 /* cubeCell.png */,
-				206178851C127C780037CA13 /* cubeA.png */,
-				206178861C127C780037CA13 /* cubeB.png */,
-				206178881C127C780037CA13 /* cubeC.png */,
-				2061788A1C127C780037CA13 /* cubeD.png */,
-				2061788B1C127C780037CA13 /* cubeE.png */,
-				2061788C1C127C780037CA13 /* cubeF.png */,
-				2061788D1C127C780037CA13 /* cubeG.png */,
-				20C0354D1C186C8C00CD4B7C /* cubeH.png */,
-				20C0354F1C18703B00CD4B7C /* cubeI.png */,
-				20C035501C18703B00CD4B7C /* cubeJ.png */,
-				20C035631C1874AF00CD4B7C /* cubeK.png */,
-				20C035511C18703B00CD4B7C /* cubeL.png */,
-				20C035521C18703B00CD4B7C /* cubeM.png */,
-				20C035641C1874AF00CD4B7C /* cubeN.png */,
-				20C035671C1874F300CD4B7C /* cubeO.png */,
-				206178971C127CB70037CA13 /* modal_background.png */,
-				206178981C127CB70037CA13 /* modal_background@2x.png */,
+				20C035731C199F1A00CD4B7C /* TumblrMenu */,
+				20C035721C199EE800CD4B7C /* myCube */,
 			);
 			name = images;
 			path = ..;
@@ -323,6 +324,65 @@
 				206178821C127AF10037CA13 /* CHTumblrMenuView.m */,
 			);
 			name = TumblrMenu;
+			sourceTree = "<group>";
+		};
+		20C035721C199EE800CD4B7C /* myCube */ = {
+			isa = PBXGroup;
+			children = (
+				20C0358A1C1AA3C700CD4B7C /* cubeBox2.png */,
+				206178871C127C780037CA13 /* cubeBox.png */,
+				206178891C127C780037CA13 /* cubeCell.png */,
+				206178851C127C780037CA13 /* cubeA.png */,
+				206178861C127C780037CA13 /* cubeB.png */,
+				206178881C127C780037CA13 /* cubeC.png */,
+				2061788A1C127C780037CA13 /* cubeD.png */,
+				2061788B1C127C780037CA13 /* cubeE.png */,
+				2061788C1C127C780037CA13 /* cubeF.png */,
+				2061788D1C127C780037CA13 /* cubeG.png */,
+				20C0354D1C186C8C00CD4B7C /* cubeH.png */,
+				20C0354F1C18703B00CD4B7C /* cubeI.png */,
+				20C035501C18703B00CD4B7C /* cubeJ.png */,
+				20C035631C1874AF00CD4B7C /* cubeK.png */,
+				20C035511C18703B00CD4B7C /* cubeL.png */,
+				20C035521C18703B00CD4B7C /* cubeM.png */,
+				20C035641C1874AF00CD4B7C /* cubeN.png */,
+				20C035671C1874F300CD4B7C /* cubeO.png */,
+			);
+			name = myCube;
+			sourceTree = "<group>";
+		};
+		20C035731C199F1A00CD4B7C /* TumblrMenu */ = {
+			isa = PBXGroup;
+			children = (
+				20C035441C16ED4E00CD4B7C /* exit.png */,
+				20C035451C16ED4E00CD4B7C /* exit@2x.png */,
+				2012764B1C151CB50089D95D /* delay.png */,
+				2012764C1C151CB50089D95D /* delay@2x.png */,
+				2012764F1C151CB50089D95D /* oops.png */,
+				201276501C151CB50089D95D /* oops@2x.png */,
+				201276511C151CB50089D95D /* xcode.png */,
+				201276521C151CB50089D95D /* xcode@2x.png */,
+				206178C11C145A0A0037CA13 /* clear.png */,
+				206178C21C145A0A0037CA13 /* clear@2x.png */,
+				206178BD1C14215F0037CA13 /* callDragon.png */,
+				206178BE1C14215F0037CA13 /* callDragon@2x.png */,
+				206178971C127CB70037CA13 /* modal_background.png */,
+				206178981C127CB70037CA13 /* modal_background@2x.png */,
+			);
+			name = TumblrMenu;
+			sourceTree = "<group>";
+		};
+		20C035831C19B7F700CD4B7C /* beginAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				20C035741C199F3300CD4B7C /* beginAnimation0.png */,
+				20C035791C19B7EA00CD4B7C /* beginAnimation1.png */,
+				20C0357A1C19B7EA00CD4B7C /* beginAnimation2.png */,
+				20C0357B1C19B7EA00CD4B7C /* beginAnimation3.png */,
+				20C0357C1C19B7EA00CD4B7C /* beginAnimation4.png */,
+				20C0357D1C19B7EA00CD4B7C /* beginAnimation5.png */,
+			);
+			name = beginAnimation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -411,6 +471,7 @@
 				206178AA1C127CB70037CA13 /* modal_background@2x.png in Resources */,
 				20C035541C18703B00CD4B7C /* cubeJ.png in Resources */,
 				206178C01C14215F0037CA13 /* callDragon@2x.png in Resources */,
+				20C035811C19B7EA00CD4B7C /* beginAnimation4.png in Resources */,
 				20C035471C16ED4E00CD4B7C /* exit@2x.png in Resources */,
 				206178931C127C780037CA13 /* cubeD.png in Resources */,
 				206178911C127C780037CA13 /* cubeC.png in Resources */,
@@ -421,11 +482,14 @@
 				206178941C127C780037CA13 /* cubeE.png in Resources */,
 				206178901C127C780037CA13 /* cubeBox.png in Resources */,
 				20C035561C18703B00CD4B7C /* cubeM.png in Resources */,
+				20C035801C19B7EA00CD4B7C /* beginAnimation3.png in Resources */,
 				2061788E1C127C780037CA13 /* cubeA.png in Resources */,
 				201276591C151CB50089D95D /* xcode.png in Resources */,
 				201276541C151CB50089D95D /* delay@2x.png in Resources */,
 				20C035491C1832A400CD4B7C /* mistViewBackground.png in Resources */,
+				20C035751C199F3300CD4B7C /* beginAnimation0.png in Resources */,
 				20C035681C1874F300CD4B7C /* cubeO.png in Resources */,
+				20C0357E1C19B7EA00CD4B7C /* beginAnimation1.png in Resources */,
 				201276531C151CB50089D95D /* delay.png in Resources */,
 				2061781B1C0FBC220037CA13 /* LaunchScreen.storyboard in Resources */,
 				206178C31C145A0A0037CA13 /* clear.png in Resources */,
@@ -437,12 +501,15 @@
 				2061788F1C127C780037CA13 /* cubeB.png in Resources */,
 				20C035461C16ED4E00CD4B7C /* exit.png in Resources */,
 				201276581C151CB50089D95D /* oops@2x.png in Resources */,
+				20C0358B1C1AA3C700CD4B7C /* cubeBox2.png in Resources */,
 				20C035531C18703B00CD4B7C /* cubeI.png in Resources */,
 				206178951C127C780037CA13 /* cubeF.png in Resources */,
 				206178921C127C780037CA13 /* cubeCell.png in Resources */,
 				206178C41C145A0A0037CA13 /* clear@2x.png in Resources */,
+				20C035821C19B7EA00CD4B7C /* beginAnimation5.png in Resources */,
 				206178161C0FBC220037CA13 /* Main.storyboard in Resources */,
 				2012765C1C1523840089D95D /* gameMenu.png in Resources */,
+				20C0357F1C19B7EA00CD4B7C /* beginAnimation2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,27 +527,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20C035861C1A784E00CD4B7C /* NormalGameViewController.m in Sources */,
 				20C0356E1C188D0100CD4B7C /* CubeO.m in Sources */,
 				20C035621C1871B500CD4B7C /* CubeM.m in Sources */,
 				206178531C101FEC0037CA13 /* CubeC.m in Sources */,
 				2061787D1C11CE3E0037CA13 /* CubeF.m in Sources */,
+				20C0358E1C1AAA7600CD4B7C /* NormalGameMenuTableViewController.m in Sources */,
 				206178491C101E020037CA13 /* myCube.m in Sources */,
 				2061784D1C101FC10037CA13 /* CubeA.m in Sources */,
+				206E0F001C1AC16400ACBB54 /* WorldGameTableViewController.m in Sources */,
+				206E0EFD1C1ABB3300ACBB54 /* WorldGameViewController.m in Sources */,
 				20C035711C188D1900CD4B7C /* CubeN.m in Sources */,
 				20C0356B1C188A0E00CD4B7C /* CubeK.m in Sources */,
 				206178801C11CE790037CA13 /* CubeG.m in Sources */,
 				206178711C11B7C50037CA13 /* CubeE.m in Sources */,
-				206178131C0FBC220037CA13 /* ViewController.m in Sources */,
 				206178501C101FCF0037CA13 /* CubeB.m in Sources */,
 				206178561C101FFE0037CA13 /* CubeD.m in Sources */,
 				20C0355F1C1871A800CD4B7C /* CubeL.m in Sources */,
 				20C035591C18708C00CD4B7C /* CubeI.m in Sources */,
 				206178101C0FBC220037CA13 /* AppDelegate.m in Sources */,
 				20C0355C1C18714F00CD4B7C /* CubeJ.m in Sources */,
-				2012765F1C1534EE0089D95D /* GameMenuTableViewController.m in Sources */,
 				20C0354C1C18627700CD4B7C /* CubeH.m in Sources */,
 				206178831C127AF10037CA13 /* CHTumblrMenuView.m in Sources */,
 				2061780D1C0FBC220037CA13 /* main.m in Sources */,
+				20C035781C199F9200CD4B7C /* LaunchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

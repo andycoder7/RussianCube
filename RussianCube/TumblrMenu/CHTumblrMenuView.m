@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 
 #import "CHTumblrMenuView.h"
-#import "ViewController.h"
+#import "WorldGameViewController.h"
 #define CHTumblrMenuViewTag 1999
 #define CHTumblrMenuViewImageHeight 60
 #define CHTumblrMenuViewTitleHeight 20
@@ -192,8 +192,8 @@
 //        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 //            btn.selectedBlock();
 //        });
-    [codeLabel_ setText:[ViewController getCodeString]];
-    if ([ViewController ifDismissBugView]) {
+    [codeLabel_ setText:[WorldGameViewController getCodeString]];
+    if ([WorldGameViewController ifDismissBugView]) {
         //移除页面
         [self dismiss:nil];
     }
