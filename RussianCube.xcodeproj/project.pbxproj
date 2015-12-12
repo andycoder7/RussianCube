@@ -13,7 +13,6 @@
 		201276581C151CB50089D95D /* oops@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201276501C151CB50089D95D /* oops@2x.png */; };
 		201276591C151CB50089D95D /* xcode.png in Resources */ = {isa = PBXBuildFile; fileRef = 201276511C151CB50089D95D /* xcode.png */; };
 		2012765A1C151CB50089D95D /* xcode@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201276521C151CB50089D95D /* xcode@2x.png */; };
-		2012765C1C1523840089D95D /* gameMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 2012765B1C1523840089D95D /* gameMenu.png */; };
 		2061780D1C0FBC220037CA13 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2061780C1C0FBC220037CA13 /* main.m */; };
 		206178101C0FBC220037CA13 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2061780F1C0FBC220037CA13 /* AppDelegate.m */; };
 		206178161C0FBC220037CA13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 206178141C0FBC220037CA13 /* Main.storyboard */; };
@@ -75,6 +74,10 @@
 		20C035861C1A784E00CD4B7C /* NormalGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C035851C1A784E00CD4B7C /* NormalGameViewController.m */; };
 		20C0358B1C1AA3C700CD4B7C /* cubeBox2.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C0358A1C1AA3C700CD4B7C /* cubeBox2.png */; };
 		20C0358E1C1AAA7600CD4B7C /* NormalGameMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C0358D1C1AAA7600CD4B7C /* NormalGameMenuTableViewController.m */; };
+		20EB07E11C1B2D4300300450 /* gameMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 20EB07DF1C1B2D4300300450 /* gameMenu.png */; };
+		20EB07E21C1B2D4300300450 /* gameMenuSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 20EB07E01C1B2D4300300450 /* gameMenuSelected.png */; };
+		20EB07E51C1B32DA00300450 /* gameMenuBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 20EB07E31C1B32DA00300450 /* gameMenuBlack.png */; };
+		20EB07E61C1B32DA00300450 /* gameMenuSelectedBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 20EB07E41C1B32DA00300450 /* gameMenuSelectedBlack.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,7 +97,6 @@
 		201276501C151CB50089D95D /* oops@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "oops@2x.png"; path = "RussianCube/images/TumblrMenu/oops@2x.png"; sourceTree = "<group>"; };
 		201276511C151CB50089D95D /* xcode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = xcode.png; path = RussianCube/images/TumblrMenu/xcode.png; sourceTree = "<group>"; };
 		201276521C151CB50089D95D /* xcode@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "xcode@2x.png"; path = "RussianCube/images/TumblrMenu/xcode@2x.png"; sourceTree = "<group>"; };
-		2012765B1C1523840089D95D /* gameMenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gameMenu.png; path = RussianCube/images/TumblrMenu/gameMenu.png; sourceTree = "<group>"; };
 		206178081C0FBC220037CA13 /* RussianCube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RussianCube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2061780C1C0FBC220037CA13 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2061780E1C0FBC220037CA13 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -183,6 +185,10 @@
 		20C0358A1C1AA3C700CD4B7C /* cubeBox2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cubeBox2.png; path = RussianCube/images/myCube/cubeBox2.png; sourceTree = "<group>"; };
 		20C0358C1C1AAA7600CD4B7C /* NormalGameMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormalGameMenuTableViewController.h; sourceTree = "<group>"; };
 		20C0358D1C1AAA7600CD4B7C /* NormalGameMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormalGameMenuTableViewController.m; sourceTree = "<group>"; };
+		20EB07DF1C1B2D4300300450 /* gameMenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gameMenu.png; path = RussianCube/images/gameMenu.png; sourceTree = "<group>"; };
+		20EB07E01C1B2D4300300450 /* gameMenuSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gameMenuSelected.png; path = RussianCube/images/gameMenuSelected.png; sourceTree = "<group>"; };
+		20EB07E31C1B32DA00300450 /* gameMenuBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gameMenuBlack.png; path = RussianCube/images/gameMenuBlack.png; sourceTree = "<group>"; };
+		20EB07E41C1B32DA00300450 /* gameMenuSelectedBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gameMenuSelectedBlack.png; path = RussianCube/images/gameMenuSelectedBlack.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,10 +274,13 @@
 		2061783A1C0FDEFB0037CA13 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				20C035831C19B7F700CD4B7C /* beginAnimation */,
 				20C035481C1832A400CD4B7C /* mistViewBackground.png */,
-				2012765B1C1523840089D95D /* gameMenu.png */,
+				20EB07DF1C1B2D4300300450 /* gameMenu.png */,
+				20EB07E01C1B2D4300300450 /* gameMenuSelected.png */,
+				20EB07E31C1B32DA00300450 /* gameMenuBlack.png */,
+				20EB07E41C1B32DA00300450 /* gameMenuSelectedBlack.png */,
 				20C035731C199F1A00CD4B7C /* TumblrMenu */,
+				20C035831C19B7F700CD4B7C /* beginAnimation */,
 				20C035721C199EE800CD4B7C /* myCube */,
 			);
 			name = images;
@@ -470,6 +479,7 @@
 				2012765A1C151CB50089D95D /* xcode@2x.png in Resources */,
 				206178AA1C127CB70037CA13 /* modal_background@2x.png in Resources */,
 				20C035541C18703B00CD4B7C /* cubeJ.png in Resources */,
+				20EB07E21C1B2D4300300450 /* gameMenuSelected.png in Resources */,
 				206178C01C14215F0037CA13 /* callDragon@2x.png in Resources */,
 				20C035811C19B7EA00CD4B7C /* beginAnimation4.png in Resources */,
 				20C035471C16ED4E00CD4B7C /* exit@2x.png in Resources */,
@@ -483,7 +493,9 @@
 				206178901C127C780037CA13 /* cubeBox.png in Resources */,
 				20C035561C18703B00CD4B7C /* cubeM.png in Resources */,
 				20C035801C19B7EA00CD4B7C /* beginAnimation3.png in Resources */,
+				20EB07E61C1B32DA00300450 /* gameMenuSelectedBlack.png in Resources */,
 				2061788E1C127C780037CA13 /* cubeA.png in Resources */,
+				20EB07E51C1B32DA00300450 /* gameMenuBlack.png in Resources */,
 				201276591C151CB50089D95D /* xcode.png in Resources */,
 				201276541C151CB50089D95D /* delay@2x.png in Resources */,
 				20C035491C1832A400CD4B7C /* mistViewBackground.png in Resources */,
@@ -498,6 +510,7 @@
 				20C035651C1874AF00CD4B7C /* cubeK.png in Resources */,
 				20C0354E1C186C8C00CD4B7C /* cubeH.png in Resources */,
 				206178181C0FBC220037CA13 /* Assets.xcassets in Resources */,
+				20EB07E11C1B2D4300300450 /* gameMenu.png in Resources */,
 				2061788F1C127C780037CA13 /* cubeB.png in Resources */,
 				20C035461C16ED4E00CD4B7C /* exit.png in Resources */,
 				201276581C151CB50089D95D /* oops@2x.png in Resources */,
@@ -508,7 +521,6 @@
 				206178C41C145A0A0037CA13 /* clear@2x.png in Resources */,
 				20C035821C19B7EA00CD4B7C /* beginAnimation5.png in Resources */,
 				206178161C0FBC220037CA13 /* Main.storyboard in Resources */,
-				2012765C1C1523840089D95D /* gameMenu.png in Resources */,
 				20C0357F1C19B7EA00CD4B7C /* beginAnimation2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

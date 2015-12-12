@@ -149,10 +149,11 @@ static NSMutableString *DismissFlag = nil;
     [gameTitle setTextAlignment:NSTextAlignmentCenter];
     gameTitle.font = [UIFont boldSystemFontOfSize:20];
     [self.gameView addSubview:gameTitle];
-    //游戏菜单按钮 (丑！ 还要改！！！)
+    //游戏菜单按钮
     UIButton *gameMenu = [[UIButton alloc] initWithFrame:CGRectMake(5, 30, 35, 35)];
     [gameMenu setImage:[UIImage imageNamed:@"gameMenu.png"] forState:UIControlStateNormal];
-    [gameMenu addTarget:self action:@selector(showGameMenu) forControlEvents:UIControlEventTouchUpInside];
+    [gameMenu setImage:[UIImage imageNamed:@"gameMenuSelected.png"] forState:UIControlStateSelected];
+    [gameMenu addTarget:self action:@selector(showGameMenu:) forControlEvents:UIControlEventTouchUpInside];
     [self.gameView addSubview:gameMenu];
     //游戏级别
     UILabel *gameLevelLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 200, 75, 20)];
@@ -357,12 +358,14 @@ static NSMutableString *DismissFlag = nil;
 }
 
 // 显示游戏菜单
-- (void)showGameMenu {
+- (void)showGameMenu:(UIButton *)btn {
     if (self.gameMenuView) {
+        btn.selected = NO;
         //点击了菜单之后，用户可能会再次点击菜单按钮以试图关闭菜单。
         [self closeGameMenu];
         return;
     }
+    btn.selected = YES;
     //暂停游戏先~
     [self pauseGame];
     
