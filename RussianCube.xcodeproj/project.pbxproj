@@ -15,7 +15,6 @@
 		2012765A1C151CB50089D95D /* xcode@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201276521C151CB50089D95D /* xcode@2x.png */; };
 		2061780D1C0FBC220037CA13 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2061780C1C0FBC220037CA13 /* main.m */; };
 		206178101C0FBC220037CA13 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2061780F1C0FBC220037CA13 /* AppDelegate.m */; };
-		206178161C0FBC220037CA13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 206178141C0FBC220037CA13 /* Main.storyboard */; };
 		206178181C0FBC220037CA13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 206178171C0FBC220037CA13 /* Assets.xcassets */; };
 		2061781B1C0FBC220037CA13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 206178191C0FBC220037CA13 /* LaunchScreen.storyboard */; };
 		206178261C0FBC220037CA13 /* RussianCubeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 206178251C0FBC220037CA13 /* RussianCubeTests.m */; };
@@ -101,7 +100,6 @@
 		2061780C1C0FBC220037CA13 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2061780E1C0FBC220037CA13 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2061780F1C0FBC220037CA13 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		206178151C0FBC220037CA13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		206178171C0FBC220037CA13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2061781A1C0FBC220037CA13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2061781C1C0FBC220037CA13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -245,7 +243,6 @@
 				206E0EFF1C1AC16400ACBB54 /* WorldGameTableViewController.m */,
 				20C035761C199F9200CD4B7C /* LaunchViewController.h */,
 				20C035771C199F9200CD4B7C /* LaunchViewController.m */,
-				206178141C0FBC220037CA13 /* Main.storyboard */,
 				206178171C0FBC220037CA13 /* Assets.xcassets */,
 				206178191C0FBC220037CA13 /* LaunchScreen.storyboard */,
 				2061781C1C0FBC220037CA13 /* Info.plist */,
@@ -520,7 +517,6 @@
 				206178921C127C780037CA13 /* cubeCell.png in Resources */,
 				206178C41C145A0A0037CA13 /* clear@2x.png in Resources */,
 				20C035821C19B7EA00CD4B7C /* beginAnimation5.png in Resources */,
-				206178161C0FBC220037CA13 /* Main.storyboard in Resources */,
 				20C0357F1C19B7EA00CD4B7C /* beginAnimation2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -585,14 +581,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		206178141C0FBC220037CA13 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				206178151C0FBC220037CA13 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		206178191C0FBC220037CA13 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
